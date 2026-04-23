@@ -1,60 +1,83 @@
-# Nuxt Starter Template
+# Boia App - Plataforma de Cálculo de Ração para Bovinos de Corte
 
-[![Nuxt UI](https://img.shields.io/badge/Made%20with-Nuxt%20UI-00DC82?logo=nuxt&labelColor=020420)](https://ui.nuxt.com)
+Este é o frontend da plataforma **Boia App**, desenvolvida para auxiliar Zootecnistas, Veterinários e produtores rurais na formulação de rações balanceadas para bovinos de corte. O sistema utiliza um fluxo de interface do tipo **Wizard (Passo a Passo)** para coletar dados e fornecer resultados precisos.
 
-Use this template to get started with [Nuxt UI](https://ui.nuxt.com) quickly.
+## 🚀 Tech Stack
 
-- [Live demo](https://starter-template.nuxt.dev/)
-- [Documentation](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
+O projeto utiliza as tecnologias mais modernas do ecossistema Vue/Nuxt para garantir performance, segurança e uma experiência de usuário premium:
 
-<a href="https://starter-template.nuxt.dev/" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-    <img alt="Nuxt Starter Template" src="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png" width="830" height="466">
-  </picture>
-</a>
+- **Framework**: [Nuxt 4](https://nuxt.com/) (Vue 3)
+- **UI Framework**: [Nuxt UI](https://ui.nuxt.com/) (Componentes acessíveis e modernos)
+- **Linguagem**: [TypeScript](https://www.typescriptlang.org/) (Tipagem estática para maior segurança)
+- **Estilização**: [SCSS](https://sass-lang.com/) (Customização avançada de estilos)
+- **Gerenciador de Pacotes**: [pnpm](https://pnpm.io/) (Rápido e eficiente)
+- **Validação de Formulários**: [Vee-Validate](https://vee-validate.logaretm.com/v4/) + [Zod](https://zod.dev/)
+- **Testes**: [Vitest](https://vitest.dev/) (Test Driven Development - TDD)
 
-> The starter template for Vue is on https://github.com/nuxt-ui-templates/starter-vue.
+---
 
-## Quick Start
+## 🛠️ Como rodar o projeto (Passo a Passo)
 
-```bash [Terminal]
-npm create nuxt@latest -- -t ui
+Este guia foi feito pensando em quem está começando. Siga os passos abaixo para configurar seu ambiente de desenvolvimento local.
+
+### 1. Pré-requisitos
+
+Antes de começar, você precisa ter instalado em sua máquina:
+- **Node.js**: Versão LTS (Recomendamos a 20.x ou superior). [Baixe aqui](https://nodejs.org/).
+- **pnpm**: Nosso gerenciador de pacotes. Se não tiver, instale rodando:
+  ```bash
+  npm install -g pnpm
+  ```
+
+### 2. Clonar o Repositório
+
+Abra o seu terminal e rode o comando para baixar o código:
+
+```bash
+git clone git@github.com:hugonorte/boiafrontend.git
+cd boiafrontend
 ```
 
-## Deploy your own
+### 3. Instalar as Dependências
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-name=starter&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-ui-templates%2Fstarter&demo-image=https%3A%2F%2Fui.nuxt.com%2Fassets%2Ftemplates%2Fnuxt%2Fstarter-dark.png&demo-url=https%3A%2F%2Fstarter-template.nuxt.dev%2F&demo-title=Nuxt%20Starter%20Template&demo-description=A%20minimal%20template%20to%20get%20started%20with%20Nuxt%20UI.)
-
-## Setup
-
-Make sure to install the dependencies:
+Dentro da pasta do projeto, baixe todas as bibliotecas necessárias:
 
 ```bash
 pnpm install
 ```
 
-## Development Server
+### 4. Executar o Servidor de Desenvolvimento
 
-Start the development server on `http://localhost:3000`:
+Agora, inicie o projeto para visualizar no navegador:
 
 ```bash
 pnpm dev
 ```
 
-## Production
+Após rodar o comando, o terminal mostrará um link (geralmente `http://localhost:3000`). Abra-o no seu navegador.
 
-Build the application for production:
+---
 
-```bash
-pnpm build
-```
+## 🧪 Testes e Qualidade
 
-Locally preview production build:
+Nós seguimos a metodologia **TDD (Test Driven Development)**. Para rodar os testes unitários e garantir que tudo está funcionando corretamente:
 
 ```bash
-pnpm preview
+pnpm test
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+---
+
+## 🏗️ Estrutura do Projeto (Wizard)
+
+O formulário de cadastro é dividido em 4 etapas principais:
+1. **CMS**: Cálculo do Consumo de Matéria Seca baseado no peso vivo e raça.
+2. **Exigências**: Definição dos níveis de proteína (PB) e energia (NDT).
+3. **Ingredientes**: Seleção e balanceamento da mistura.
+4. **Resultados**: Análise nutricional e econômica detalhada.
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença [MIT](LICENSE).
