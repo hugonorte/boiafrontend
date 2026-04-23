@@ -15,13 +15,18 @@ const props = defineProps({
   }
 })
 
+const { state } = useWizardState()
+
 const estimatedCMS = (pesoVivo: number, cms: number) => {
-  return (((pesoVivo || 0) * (cms || 0))/100)
+  const result = (pesoVivo || 0) * (cms || 0)
+  state.value.step1.totalCMS = result
+  return result
 }
 
-const cmsPorPesoVivo = ref(0)
-const selectCustom = ref(false)
-const customValue = ref(0)
+// Watcher para garantir que o totalCMS esteja sempre sincronizado
+watch(() => [props.pesoVivo, state.value.step1.cmsPercentage], () => {
+  estimatedCMS(props.pesoVivo, state.value.step1.cmsPercentage)
+}, { immediate: true })
 
 const cmsPresets = [
   { label: 'BAIXO 1.8%', value: 1.8 },
@@ -30,12 +35,13 @@ const cmsPresets = [
 ]
 
 const handlePreset = (val: number) => {
-  selectCustom.value = false
-  cmsPorPesoVivo.value = estimatedCMS(props.pesoVivo, val)
+  state.value.step1.isCustomCMS = false
+  state.value.step1.cmsPercentage = val
 }
 
 const handleCustomInput = () => {
-  cmsPorPesoVivo.value = estimatedCMS(props.pesoVivo, customValue.value)
+  state.value.step1.isCustomCMS = true
+  state.value.step1.cmsPercentage = state.value.step1.cmsCustomValue || 0
 }
 </script>
 
@@ -47,23 +53,24 @@ const handleCustomInput = () => {
         v-for="preset in cmsPresets" 
         :key="preset.value"
         class="segment-btn"
+        :class="{ active: state.step1.cmsPercentage === preset.value && !state.step1.isCustomCMS }"
         @click="handlePreset(preset.value)"
       >
         {{ preset.label }}
       </button>
       <button 
         class="segment-btn"
-        :class="{ active: selectCustom }"
-        @click="selectCustom = !selectCustom"
+        :class="{ active: state.step1.isCustomCMS }"
+        @click="state.step1.isCustomCMS = !state.step1.isCustomCMS"
       >
         <UIcon name="i-heroicons-pencil-square" class="mr-1" />
         PERSONALIZADO
       </button>
     </div>
 
-    <div v-if="selectCustom" class="custom-input-wrapper mt-4">
+    <div v-if="state.step1.isCustomCMS" class="custom-input-wrapper mt-4">
       <UInput 
-        v-model="customValue" 
+        v-model="state.step1.cmsCustomValue" 
         type="number" 
         step="0.1" 
         placeholder="Informe o valor (ex: 2.2)" 
@@ -73,16 +80,16 @@ const handleCustomInput = () => {
     </div>
 
     <div class="mt-4 p-4 bg-gray-50 rounded-lg text-center border-2 border-dashed border-gray-200">
-      <template v-if="props.pesoVivo > 0">
+      <template v-if="props.pesoVivo > 0 && state.step1.totalCMS > 0">
         <p class="text-lg font-semibold text-slate-800">
-          Consumo estimado: CMS = {{ Number(cmsPorPesoVivo).toFixed(2) }} kg/dia
+          <UBadge color="primary" variant="subtle" class="mt-2 font-bold">
+            {{ ((Number(state.step1.totalCMS) / props.pesoVivo) * 100).toFixed(1) }}% do Peso Vivo
+          </UBadge>
+          <UAlert icon="i-lucide-info" color="neutral" variant="subtle" description="O consumo de matéria seca representa a quantidade de alimento que o animal ingere diariamente, desconsiderando a água." />
         </p>
-        <UBadge color="primary" variant="subtle" class="mt-2">
-          {{ ((Number(cmsPorPesoVivo) / (props.pesoVivo || 1))/100).toFixed(1) }}% do Peso Vivo
-        </UBadge>
       </template>
       <template v-else>
-        <p class="text-sm text-gray-400 italic">Aguardando definição do Peso Vivo...</p>
+        <p class="text-sm text-gray-400 italic">Aguardando definição do Peso Vivo e CMS...</p>
       </template>
     </div>  
   </div>

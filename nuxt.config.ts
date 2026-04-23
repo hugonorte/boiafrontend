@@ -20,6 +20,16 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-01-15',
+  
+  colorMode: {
+    preference: 'light',
+    fallback: 'light',
+    storage: 'localStorage',
+    componentName: 'ColorScheme',
+    classPrefix: '',
+    classSuffix: '-mode',
+    storageKey: 'nuxt-color-mode'
+  },
 
   eslint: {
     config: {

@@ -26,6 +26,8 @@ const items = [
     }
 ] as const satisfies StepperItem[]
 
+const { state, logState } = useWizardState()
+
 // Sync current step with route
 const current = computed({
     get: () => {
@@ -45,6 +47,18 @@ const current = computed({
         if (paths[val]) navigateTo(paths[val])
     }
 })
+
+const handlePrev = () => {
+    logState('Voltar')
+    current.value--
+}
+
+const handleNext = () => {
+    logState('Avançar')
+    if (current.value < items.length - 1) {
+        current.value++
+    }
+}
 </script>
 
 <template>
@@ -72,14 +86,14 @@ const current = computed({
                 <template #footer>
                     <div class="flex justify-between items-center">
                         <UButton v-if="current > 0" color="neutral" variant="ghost" icon="i-heroicons-arrow-left"
-                            @click="current--">
-                            Voltar
+                            @click="handlePrev">
+                            Passo anterior: {{ items[current - 1]?.title }}
                         </UButton>
                         <div v-else />
 
-                        <UButton color="primary" trailing-icon="i-heroicons-arrow-right" size="lg"
-                            class="px-8 font-bold" @click="current < 3 ? current++ : null">
-                            {{ current === 3 ? 'Finalizar' : 'Próximo Passo' }}
+                        <UButton color="primary" :trailing-icon="current === items.length - 1 ? 'i-heroicons-check' : 'i-heroicons-arrow-right'" size="lg"
+                            class="px-8 font-bold" @click="handleNext">
+                            {{ current === items.length - 1 ? 'Salvar ração e fechar' : `Próximo Passo: ${items[current + 1]?.title}` }}
                         </UButton>
                     </div>
                 </template>

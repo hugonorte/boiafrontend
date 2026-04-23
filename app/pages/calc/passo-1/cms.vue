@@ -3,6 +3,8 @@ definePageMeta({
     layout: 'wizard'
 })
 
+const { state } = useWizardState()
+
 const racas = ref([
     'Nelore',
     'Angus',
@@ -16,24 +18,20 @@ const racas = ref([
     'Crioulo',
     'Outra'
 ])
-const racaSelecionada = ref('Nelore')
-
-const pesoVivo = ref(0)
-const cms = ref(0)
 </script>
 
 <template>
     <UContainer class="container">
         <UFormField label="Raça do animal" class="form-field">
-            <USelect v-model="racaSelecionada" :items="racas" class="select" />
+            <USelect v-model="state.step1.animalRace" :items="racas" class="select" />
         </UFormField>
 
         <UFormField label="Peso vivo (kg)" help="Peso atual do animal" class="form-field">
-            <UInput type="number" v-model="pesoVivo" placeholder="Ex: 450" />
+            <UInput type="number" v-model="state.step1.liveWeight" placeholder="Ex: 450" />
         </UFormField>
     </UContainer>
     <UContainer class="cms">
-        <WizardCmsSelector label="% do Peso Vivo (CMS)" :pesoVivo="pesoVivo" />
+        <WizardCmsSelector label="% do Peso Vivo (CMS)" :pesoVivo="state.step1.liveWeight" />
     </UContainer>
 </template>
 
