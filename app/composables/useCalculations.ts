@@ -4,9 +4,9 @@ export const useCalculations = () => {
   }
 
   const getCMSStatus = (percentage: number) => {
-    if (percentage < 2.0) return { label: 'Consumo adequado', color: 'green' }
-    if (percentage <= 2.2) return { label: 'Consumo moderado', color: 'yellow' }
-    return { label: 'Consumo alto (alerta)', color: 'red' }
+    if (percentage < 2.0) return { label: 'Consumo adequado', color: 'success' } as const
+    if (percentage <= 2.2) return { label: 'Consumo moderado', color: 'warning' } as const
+    return { label: 'Consumo alto (alerta)', color: 'error' } as const
   }
 
   return {

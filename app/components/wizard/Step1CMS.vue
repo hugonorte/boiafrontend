@@ -80,3 +80,22 @@ const cmsStatus = computed(() => {
     </UCard>
   </div>
 </template>
+
+<style lang="scss">
+.premium-card {
+    border-radius: 24px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    
+    .text-gray-900 {
+        color: #1e293b;
+    }
+}
+
+.step-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+</style>

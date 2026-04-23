@@ -1,98 +1,229 @@
 <script setup lang="ts">
+/**
+ * Step 4: Resultados / Análise
+ * High-fidelity replication from Stitch Design
+ */
+
 const { state } = useWizardState()
 
-const nutritionData = computed(() => [
-  { nutrient: 'Proteína Bruta (PB)', ideal: `${state.value.step2.pb}%`, reached: '11.5%', status: 'yellow', icon: 'i-heroicons-exclamation-triangle' },
-  { nutrient: 'Energia (NDT)', ideal: `${state.value.step2.ndt}%`, reached: '62%', status: 'green', icon: 'i-heroicons-check-circle' },
-  { nutrient: 'Fibra (FDN)', ideal: `${state.value.step2.fdn}%`, reached: '52%', status: 'green', icon: 'i-heroicons-check-circle' }
-])
-
-const economicData = [
-  { label: 'Custo Total', day: 'R$ 12,50', kg: 'R$ 1,25' }
+const results = [
+  { name: 'Milho Grão', percentage: 45, mn: 4.5 },
+  { name: 'Farelo de Soja', percentage: 15, mn: 1.5 },
+  { name: 'Silagem de Milho', percentage: 38, mn: 12.0 },
+  { name: 'Suplemento', percentage: 2, mn: 0.2 }
 ]
 
-const columns = [
-  { key: 'nutrient', label: 'Nutriente' },
-  { key: 'ideal', label: 'Ideal' },
-  { key: 'reached', label: 'Atingido' }
+const nutrients = [
+  { name: 'Proteína Bruta (PB)', unit: '%', goal: 12.0, actual: 12.1, status: 'ok' },
+  { name: 'Energia (NDT)', unit: '%', goal: 65.0, actual: 66.2, status: 'ok' },
+  { name: 'FDN', unit: '%', goal: 45.0, actual: 44.5, status: 'ok' },
+  { name: 'FDA', unit: '%', goal: 25.0, actual: 24.2, status: 'ok' }
 ]
 </script>
 
 <template>
-  <div class="step-content space-y-6">
-    <UCard class="premium-card">
-      <template #header>
-        <div class="text-center">
-          <h2 class="text-2xl font-bold text-gray-900">Resultado da Dieta</h2>
-          <p class="text-gray-500">Análise nutricional e econômica da formulação</p>
-        </div>
-      </template>
-
-      <div class="space-y-8">
-        <!-- Overall Status -->
-        <div class="flex flex-col items-center">
-          <UBadge color="yellow" variant="solid" size="lg" class="px-6 py-2 text-lg">
-            🟡 Dieta em análise
-          </UBadge>
-          <p class="text-sm text-gray-500 mt-2">Ajustes recomendados para atingir a proteína ideal</p>
-        </div>
-
-        <!-- Nutrient Progress -->
-        <div class="space-y-4">
-          <h3 class="font-semibold text-lg border-b pb-2">Composição Nutricional</h3>
-          <div v-for="item in nutritionData" :key="item.nutrient" class="space-y-1">
-            <div class="flex justify-between text-sm">
-              <span>{{ item.nutrient }}</span>
-              <span :class="`text-${item.status}-600 font-bold`">{{ item.reached }}</span>
-            </div>
-            <UProgress :value="80" :color="item.status" />
-          </div>
-        </div>
-
-        <!-- Nutritional Table -->
-        <UTable :columns="columns" :rows="nutritionData">
-          <template #reached-data="{ row }">
-            <span :class="row.status === 'green' ? 'text-green-600' : 'text-yellow-600'">
-              {{ row.reached }}
-              <UIcon :name="row.icon" class="ml-1" />
-            </span>
-          </template>
-        </UTable>
-
-        <!-- Economic Summary -->
-        <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
-          <h3 class="font-semibold text-lg mb-4">Resumo Econômico</h3>
-          <div class="grid grid-cols-2 gap-4 text-center">
-            <div class="p-4 bg-white rounded-lg shadow-sm">
-              <p class="text-xs text-gray-500 uppercase">Custo por Dia</p>
-              <p class="text-2xl font-bold text-primary-600">R$ 12,50</p>
-            </div>
-            <div class="p-4 bg-white rounded-lg shadow-sm">
-              <p class="text-xs text-gray-500 uppercase">Custo por Kg</p>
-              <p class="text-2xl font-bold text-primary-600">R$ 1,25</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Recommendations -->
-        <UAlert
-          color="yellow"
-          variant="subtle"
-          icon="i-heroicons-light-bulb"
-          title="Recomendações"
-          description="Aumentar farelo de soja para elevar proteína. Adicionar fonte de fibra se necessário."
-        />
-
-        <!-- Actions -->
-        <div class="flex gap-4">
-          <UButton color="gray" variant="outline" icon="i-heroicons-document-arrow-down" class="flex-1">
-            Exportar PDF
-          </UButton>
-          <UButton color="gray" variant="outline" icon="i-heroicons-table-cells" class="flex-1">
-            Exportar Excel
-          </UButton>
-        </div>
+  <div class="step-results-fidelity">
+    <!-- Header with MN Highlight -->
+    <header class="step-header mb-8 flex justify-between items-end">
+      <div>
+        <h2 class="title">Resultado Final</h2>
+        <p class="subtitle">Confira a composição e análise nutricional da dieta.</p>
       </div>
-    </UCard>
+      <div class="mass-highlight">
+        <span class="label">MASSA TOTAL (MN)</span>
+        <span class="value">18,2 <small>kg/dia</small></span>
+      </div>
+    </header>
+
+    <div class="results-container space-y-8">
+      <!-- 1. Composition List -->
+      <section class="composition-section">
+        <label class="group-label">Composição da Ração (% MS)</label>
+        <div class="composition-grid grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div v-for="res in results" :key="res.name" class="comp-card">
+            <div class="comp-info">
+              <span class="name">{{ res.name }}</span>
+              <span class="mn-val">{{ res.mn }} kg MN</span>
+            </div>
+            <div class="comp-percentage">
+              <span class="val">{{ res.percentage }}%</span>
+              <div class="mini-bar"><div class="fill" :style="{ width: res.percentage + '%' }" /></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Nutritional Table -->
+      <section class="analysis-section">
+        <label class="group-label">Análise Nutricional</label>
+        <div class="nutritional-table mt-4">
+          <div class="table-header">
+            <span>Nutriente</span>
+            <span>Meta</span>
+            <span>Alcançado</span>
+            <span>Status</span>
+          </div>
+          <div v-for="nut in nutrients" :key="nut.name" class="table-row">
+            <span class="nut-name">{{ nut.name }}</span>
+            <span class="nut-goal">{{ nut.goal }} {{ nut.unit }}</span>
+            <span class="nut-actual" :class="{ 'text-green-600': nut.status === 'ok' }">{{ nut.actual }} {{ nut.unit }}</span>
+            <span class="nut-status">
+              <UIcon v-if="nut.status === 'ok'" name="i-heroicons-check-circle" class="text-green-600" />
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. AI Insights -->
+      <section class="insights-section">
+        <div class="ai-insights-card">
+          <header class="card-header">
+            <UIcon name="i-heroicons-sparkles" class="text-amber-500" />
+            <span>INSIGHTS DO ASSISTENTE BOIA</span>
+          </header>
+          <ul class="insights-list space-y-2 mt-4">
+            <li class="insight-item">
+              <UIcon name="i-heroicons-check" />
+              <span>A relação volumoso:concentrado está ideal para o ganho de peso pretendido.</span>
+            </li>
+            <li class="insight-item">
+              <UIcon name="i-heroicons-light-bulb" />
+              <span>Dica: Verifique a qualidade da silagem, pois ela representa 38% da dieta.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 4. Secondary Actions -->
+      <div class="export-actions flex gap-4">
+        <UButton color="gray" variant="soft" icon="i-heroicons-printer" block>Imprimir PDF</UButton>
+        <UButton color="gray" variant="soft" icon="i-heroicons-share" block>Compartilhar</UButton>
+      </div>
+    </div>
   </div>
 </template>
+
+<style lang="scss">
+.step-results-fidelity {
+  .mass-highlight {
+    text-align: right;
+    background-color: #1e293b;
+    padding: 0.75rem 1.25rem;
+    border-radius: 16px;
+    color: white;
+    
+    .label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #94a3b8;
+      letter-spacing: 0.05em;
+    }
+    .value {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #22c55e;
+      
+      small { font-size: 0.8rem; color: #94a3b8; font-weight: 500; }
+    }
+  }
+
+  .group-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    margin-bottom: 0.75rem;
+  }
+
+  .comp-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .name { font-weight: 800; font-size: 0.85rem; color: #1e293b; display: block; }
+    .mn-val { font-size: 0.7rem; color: #64748b; font-weight: 600; }
+    
+    .comp-percentage {
+      text-align: right;
+      width: 80px;
+      
+      .val { font-weight: 900; font-size: 1rem; color: #16a34a; }
+      .mini-bar {
+        height: 4px;
+        background-color: #e2e8f0;
+        border-radius: 2px;
+        margin-top: 0.25rem;
+        overflow: hidden;
+        .fill { height: 100%; background-color: #22c55e; }
+      }
+    }
+  }
+
+  .nutritional-table {
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    
+    .table-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 0.5fr;
+      padding: 0.75rem 1rem;
+      background-color: #f1f5f9;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+    
+    .table-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 0.5fr;
+      padding: 1rem;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.85rem;
+      align-items: center;
+      
+      &:last-child { border-bottom: none; }
+      
+      .nut-name { font-weight: 700; color: #334155; }
+      .nut-goal { color: #64748b; }
+      .nut-actual { font-weight: 800; }
+    }
+  }
+
+  .ai-insights-card {
+    background-color: #fffbeb;
+    border: 1px solid #fef3c7;
+    border-radius: 20px;
+    padding: 1.5rem;
+    
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 900;
+      font-size: 0.75rem;
+      color: #92400e;
+      letter-spacing: 0.05em;
+    }
+    
+    .insight-item {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: #92400e;
+      font-weight: 500;
+      line-height: 1.4;
+      
+      .icon { margin-top: 0.15rem; flex-shrink: 0; }
+    }
+  }
+}
+</style>

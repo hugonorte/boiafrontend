@@ -104,10 +104,7 @@ Exemplo do que deverá ser mostrado:
 
 - Use um URadioGroup para definir o objetivo da dieta com as seguintes opções:
   - 🔘 Mantença
-  - 🔘 Cria
-  - 🔘 Recria
-  - 🔘 Terminação
-  - 🔘 Reprodução
+  - 🔘 Ganho moderado
   - 🔘 Ganho intensivo
   - 🔘 Personalizado
 
@@ -184,7 +181,7 @@ Caso o usuário escolha “Escolha os ingredientes por mim”, o sistema fará (
 |   | Núcleo mineral 
 
 ##### Seletor de modo
-- Após escolher os ingredientes na tabela acima, o usuário exibirá uma tabela completa com o título **"Composição da Dieta"** mostrando os ingredientes selecionados e os valores nutricionais (PB, NDT, FDN, FDA, MS) e o custo (R$/kg) (baseados na tabela NRC)
+- Após escolher os ingredientes na tabela acima, o usuário exibirá uma tabela completa mostrando os ingredientes selecionados e os valores nutricionais (PB, NDT, FDN, FDA, MS) e o custo (R$/kg) (baseados na tabela NRC)
 
 | Ingrediente   | PB (%) | NDT (%) | FDN (%) | FDA (%) | MS (%) | Custo (R$/kg) |
 | ------ | ------- | ------- | ------- | ------ | ------------- |
@@ -232,13 +229,6 @@ Caso o usuário escolha “Escolha os ingredientes por mim”, o sistema fará (
 - **Subtítulo**:
 👉 “Análise nutricional e econômica da formulação”
 
-##### Status Geral
-- Use o componente **UBadge** da Nuxt UI para mostrar o status geral da dieta, por exemplo:
-    - ✅ Dieta aprovada
-    - 🟡 Dieta em análise
-    - 🔴 Dieta reprovada
-
-##### RESULTADO DA DIETA
 - Use o componente **UCard** da Nuxt UI para exibir os dados das etapas anteriores, que ficaram gravados no composable, por exemplo:
     - Animal selecionado: Nelore, macho, 500kg
     - CMS: 10 kg/dia
@@ -249,27 +239,13 @@ Caso o usuário escolha “Escolha os ingredientes por mim”, o sistema fará (
     - MS atingida: 100% (100%)
     - Custo: R$ 10,00/dia
 
-###### Ingredientes com percentual
-Mostrar em uma tabela os ingredientes e o total em Kg/dia
+##### Status Geral
+- Use o componente **UBadge** da Nuxt UI para mostrar o status geral da dieta, por exemplo:
+    - ✅ Dieta aprovada
+    - 🟡 Dieta em análise
+    - 🔴 Dieta reprovada
 
-| Ingrediente   | % | Kg/dia
-| ------ | ------ | ------
-| Milho   | 50% | 5
-| Farelo de soja   | 30% | 3
-| Silagem   | 20% | 2
-| Capim   | 10% | 1
-| Núcleo mineral   | 0.5
-
-Mostrar em tempo real:
-- Alertas
-- Sugestões
-- Elogios
-- Recomendações
-    - 🔴 “Proteína insuficiente”
-    - 🟡 “Excesso de concentrado”
-    - 🔴 “Risco de acidose”
-
-#### Relatório final detalhado 
+##### COMPOSIÇÃO DA DIETA
 
 ###### Ingredientes com percentual
 - Use o componente **UProgress** da Nuxt UI para mostrar o % ideal calculado para cada ingrediente, mostrando em uma linha o nome do ingrediente e a barra com o percentual por exemplo:
@@ -322,12 +298,12 @@ Caso algum dos itens acima esteja fora do ideal, o sistema deverá mostrar um al
 
 ---
 
-- Nuxt 4 (Versão atualizada)
-- Nuxt UI v4 (Configurado com Tailwind v4)
+## Stack utilizada
+- Nuxt 4
+- Nuxt UI
 - pnpm
 - TypeScript
-- SCSS (Estilização primária)
-- tailwindcss v4
+- SCSS
 - vee-validate
 - zod
 - Gerenciamento de estado do frontend com composables
@@ -391,38 +367,9 @@ O fluxo de dados será centralizado em composables nativos do Nuxt (`app/composa
 - Aplicar, sempre que posssível a petodologia TDD, ou seja, primeiro criar um teste, rodá-lo, criar o código principal, rodar novamente o teste e se o teste passar, encerrar a tarefa.
 
 ## Estilos CSS e Framework UI
-- **Nuxt UI v4**: Base para componentes acessíveis. Utiliza o novo motor do Tailwind v4.
+- **Nuxt UI**: Base para componentes acessíveis.
 - **SCSS (Primário)**: A estilização do projeto será definida majoritariamente e primeiramente em SCSS. O objetivo é manter o código HTML limpo, separando a estrutura do estilo para garantir maior organização e facilidade de manutenção (Filosofia de separação de interesses).
-- **Tailwind CSS v4**: Será utilizado apenas em momentos excepcionais e focado em ajustes finos em elementos específicos do módulo Nuxt UI. Deve-se evitar o uso excessivo de classes utilitárias no HTML.
-
-## Configurações Críticas de UI (Padrão Nuxt UI v4)
-Para garantir que os estilos sejam aplicados corretamente e sigam o padrão do projeto em caso de reinicialização:
-
-1. **Importação Obrigatória no CSS Global**:
-   - No arquivo de entrada CSS (ex: `app/assets/css/app.css`), é obrigatório incluir:
-     ```css
-     @import "tailwindcss";
-     @import "@nuxt/ui";
-     ```
-   - Sem a importação do `@nuxt/ui`, os componentes não carregarão seus estilos base.
-
-2. **Configuração de Tema (`app.config.ts`)**:
-   - O tema deve ser definido no `app.config.ts` para alinhar com a identidade Agro-Premium:
-     ```typescript
-     export default defineAppConfig({
-       ui: {
-         primary: 'green',
-         gray: 'slate'
-       }
-     })
-     ```
-
-3. **Wrapper Global (`app.vue`)**:
-   - Todos os componentes devem estar dentro do wrapper `<UApp>` para que os estilos e feedbacks visuais funcionem corretamente.
-
-4. **Padrão de Propriedades de Componentes (v4)**:
-   - **UStepper**: Utilizar a propriedade `title` para o título de cada etapa (não use `label`, que foi depreciado ou alterado na v4).
-   - **Icons**: Utilizar o prefixo `i-` (ex: `i-heroicons-leaf`).
+- **Tailwind CSS**: Será utilizado apenas em momentos excepcionais e focado em ajustes finos em elementos específicos do módulo Nuxt UI. Deve-se evitar o uso excessivo de classes utilitárias no HTML.
 
 ## Plano de Verificação
 - Verificação visual em múltiplos breakpoints.
