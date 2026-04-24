@@ -16,17 +16,21 @@ const globalState = ref({
   step1: {
     animalRace: '',
     liveWeight: 0,
+    dietObjective: '',
     cmsPercentage: 0,
     cmsCustomValue: null as number | null,
     isCustomCMS: false,
-    totalCMS: 0
+    totalCMS: 0,
+    pesoMetabolico: 0,
+    EnergiaLiquidaMantenca: 0,
+    sex: '',
+    age: 0,
+    pregnancyDays: undefined as number | undefined,
+    milkProduction: undefined as number | undefined
   },
   step2: {
-    dietObjective: '',
-    pb: 0,
-    ndt: 0,
-    fda: 0,
-    fdn: 0
+    productionSystem: '',
+    activityLevel: '',
   },
   step3: {
     balanceMode: '',

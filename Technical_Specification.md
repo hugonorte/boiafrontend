@@ -20,6 +20,25 @@ Energia líquida (mantença e ganho) FDN (fibra detergente neutro) → controle 
 #### Passo 1 de 4
 - **No topo da tela**  use o Stepper do Nuxt UI para mostrar o desenrolar das etapas.
 
+##### Equações para alcançar o valor de CMS 
+**Equação 1 - Mantença**
+- Variável: Peso Vivo (PC) - Ex: 500kg
+
+**Equação 2 - Ganho de Peso (g/dia)**
+- Variável1 Variável: Ganho de Peso médio diário (g/dia) - Ex: 800g
+- Variável2: Peso Vivo (PC) - Ex: 500kg
+
+**Equação 3 - Gestação**
+- Variável1: Peso Vivo (PC) - Ex: 500kg
+- Variável2: Dias de Gestação - Ex: 150
+
+**Equação 4 - Lactação**
+- Variável1: Peso Vivo (PC) - Ex: 500kg
+- Variável2: Produção de Leite (L/dia) - Ex: 10
+- Variável3: Percentual de gordura - Ex: 3.5
+
+
+
 Título:
 👉 “Consumo de Matéria Seca (CMS)”
 Subtítulo:

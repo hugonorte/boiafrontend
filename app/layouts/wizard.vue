@@ -5,13 +5,13 @@ const route = useRoute()
 
 const items = [
     {
-        title: 'Consumo de Matéria Seca (CMS)',
-        description: 'Estimativa de consumo diário.',
+        title: 'Dados do animal',
+        description: 'Características do principais',
         icon: 'i-heroicons-user'
     },
     {
-        title: 'Exigências nutricionais',
-        description: 'Requisitos nutricionais do animal',
+        title: 'Sistema de produção',
+        description: 'Defina o objetivo e exigências',
         icon: 'i-heroicons-academic-cap'
     },
     {
@@ -39,8 +39,8 @@ const current = computed({
     },
     set: (val) => {
         const paths = [
-            '/calc/passo-1/cms',
-            '/calc/passo-2/exigencias-nutricionais',
+            '/calc/passo-1/dados-do-animal',
+            '/calc/passo-2/sistema-de-producao',
             '/calc/passo-3/ingredientes',
             '/calc/passo-4/resultado'
         ]
