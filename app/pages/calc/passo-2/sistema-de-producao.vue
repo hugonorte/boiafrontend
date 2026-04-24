@@ -19,8 +19,6 @@ const { state } = useWizardState()
             :description="`Peso Vivo: ${state.step1.liveWeight}kg | CMS Estimado: ${state.step1.totalCMS.toFixed(2)} kg/dia`"
         />
         <WizardSistemaProducao />
-        <UDivider />
-        <WizardAtividade />
     </UContainer>
 </template>
 

@@ -3,21 +3,11 @@ definePageMeta({
     layout: 'wizard'
 })
 
-const { state } = useWizardState()
+const { state, validationErrors } = useWizardState()
 
-const racas = ref([
-    'Nelore',
-    'Angus',
-    'Braford',
-    'Charolês',
-    'Simental',
-    'Guzerá',
-    'Tabapuã',
-    'Canchim',
-    'Pantaneiro',
-    'Crioulo',
-    'Outra'
-])
+const racas = [
+    'Nelore', 'Angus', 'Braford', 'Charolês', 'Simental', 'Guzerá', 'Tabapuã', 'Canchim', 'Pantaneiro', 'Crioulo', 'Outra'
+]
 
 const sexos = [
     { label: 'Macho', value: 'macho' },
@@ -31,74 +21,65 @@ const dietObjectives = [
     { label: 'Lactação', value: 'lactação', icon: 'i-heroicons-beaker', description: 'Baseado na produção diária e gordura do leite.' }
 ]
 
-watch(() => state.value.step1.liveWeight, (newWeight) => {
-    if (newWeight > 0) {
-        state.value.step1.pesoMetabolico = Math.pow(newWeight, 0.75)
+// Usando inputs simples para garantir compatibilidade total com Cypress
+const handleWeightInput = (val: any) => {
+    const num = Number(val)
+    state.value.step1.liveWeight = num
+    if (num > 0) {
+        state.value.step1.pesoMetabolico = Math.pow(num, 0.75)
         state.value.step1.EnergiaLiquidaMantenca = state.value.step1.pesoMetabolico * 0.077
-    } else {
-        state.value.step1.pesoMetabolico = 0
-        state.value.step1.EnergiaLiquidaMantenca = 0
     }
-})
+}
 </script>
 
 <template>
-    <UContainer class="container">
-        <UFormField label="Raça do animal" class="form-field">
-            <USelect v-model="state.step1.animalRace" :items="racas" class="select" />
+    <div class="container flex flex-col gap-6 p-4">
+        <UFormField label="Raça do animal" :error="validationErrors.animalRace">
+            <select v-model="state.step1.animalRace" id="input-race" class="w-full p-2 border rounded bg-white text-slate-900 border-slate-300">
+                <option value="">Selecione a raça</option>
+                <option v-for="r in racas" :key="r" :value="r">{{ r }}</option>
+            </select>
         </UFormField>
 
-        <div class="row-flex">
-            <UFormField label="Sexo" class="form-field field-item">
-                <USelect v-model="state.step1.sex" :items="sexos" placeholder="Selecione" />
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <UFormField label="Sexo" :error="validationErrors.sex">
+                <select v-model="state.step1.sex" id="input-sex" class="w-full p-2 border rounded bg-white text-slate-900 border-slate-300">
+                    <option value="">Selecione</option>
+                    <option value="macho">Macho</option>
+                    <option value="fêmea">Fêmea</option>
+                </select>
             </UFormField>
 
-            <UFormField label="Idade (meses)" class="form-field field-item">
-                <UInput v-model="state.step1.age" type="number" placeholder="Ex: 24" />
+            <UFormField label="Idade (meses)" :error="validationErrors.age">
+                <UInput v-model.number="state.step1.age" type="number" placeholder="Ex: 24" id="input-age" class="w-full" />
             </UFormField>
 
-            <UFormField label="Peso vivo (kg)" help="Peso atual do animal" class="form-field field-item">
-                <UInput type="number" v-model="state.step1.liveWeight" placeholder="Ex: 450" />
+            <UFormField label="Peso vivo (kg)" :error="validationErrors.liveWeight">
+                <UInput type="number" :model-value="state.step1.liveWeight" @update:model-value="handleWeightInput" placeholder="Ex: 450" id="input-weight" class="w-full" />
             </UFormField>
         </div>
 
-        <UFormField label="Objetivo da Dieta" class="form-field">
-            <WizardSelectionCards 
-                v-model="state.step1.dietObjective" 
-                :items="dietObjectives" 
-            />
+        <UFormField label="Objetivo da Dieta" :error="validationErrors.dietObjective">
+            <div class="objective-grid grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div v-for="obj in dietObjectives" :key="obj.value" 
+                     :class="['p-4 border-2 rounded-xl cursor-pointer transition-all', state.step1.dietObjective === obj.value ? 'border-primary-500 bg-primary-50' : 'border-slate-200 hover:border-slate-300 bg-white']"
+                     @click="state.step1.dietObjective = obj.value"
+                     :id="`objective-${obj.value}`">
+                    <div class="flex items-center gap-3">
+                        <UIcon :name="obj.icon" class="text-2xl text-primary-600" />
+                        <div>
+                            <p class="font-bold text-slate-900">{{ obj.label }}</p>
+                            <p class="text-xs text-slate-500">{{ obj.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </UFormField>
-    </UContainer>
+    </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.row-flex {
-    display: flex;
-    gap: 1.5rem;
-    width: 100%;
-
-    .field-item {
-        flex: 1;
-    }
-}
-.cms {
-    margin-top: 2rem;
-}
-.form-field {
-    label{
-        color:rgb(7, 52, 17);
-    }
-    button, div, input {
-        width: 100%;
-    }
-    [data-slot="help"]{
-        color:rgb(49, 71, 62);
-    }
+    padding: 1rem 0;
 }
 </style>

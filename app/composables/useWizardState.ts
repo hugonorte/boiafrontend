@@ -1,16 +1,18 @@
 import { ref } from 'vue'
 
 export interface Ingredient {
-  id: string
-  name: string
+  id: number
+  nome: string
+  categoria: string
+  ms: number
   pb: number
-  ndt: number
-  fda: number
-  costPerKg: number
+  fdn: number
+  em: number
+  custo: number
   amountKg?: number
 }
 
-// Estado global persistente (fora da função para ser compartilhado entre componentes)
+// Estado global persistente
 const globalState = ref({
   currentStep: 0,
   step1: {
@@ -43,8 +45,12 @@ const globalState = ref({
   }
 })
 
+// Erros de validação globais para que layout e páginas compartilhem o mesmo estado
+const globalValidationErrors = ref<Record<string, any>>({})
+
 export const useWizardState = () => {
   const state = globalState
+  const validationErrors = globalValidationErrors
 
   const nextStep = () => {
     if (state.value.currentStep < 3) {
@@ -62,8 +68,29 @@ export const useWizardState = () => {
     console.log(`[WIZARD DEBUG] Ação: ${action}`, JSON.parse(JSON.stringify(state.value)))
   }
 
+  const validateStep = (stepNumber: number) => {
+    validationErrors.value = {}
+    if (stepNumber === 1) {
+      if (!state.value.step1.animalRace) validationErrors.value.animalRace = "Obrigatório"
+      if (!state.value.step1.sex) validationErrors.value.sex = "Obrigatório"
+      if (!state.value.step1.age) validationErrors.value.age = "Obrigatório"
+      if (!state.value.step1.liveWeight || state.value.step1.liveWeight <= 0) validationErrors.value.liveWeight = "Obrigatório"
+      if (!state.value.step1.dietObjective) validationErrors.value.dietObjective = "Obrigatório"
+    } else if (stepNumber === 2) {
+      if (!state.value.step2.productionSystem) validationErrors.value.productionSystem = "Obrigatório"
+      if (!state.value.step2.activityLevel) validationErrors.value.activityLevel = "Obrigatório"
+    } else if (stepNumber === 3) {
+      if (!state.value.step3.selectedIngredients || state.value.step3.selectedIngredients.length === 0) {
+        validationErrors.value.selectedIngredients = "Selecione pelo menos um ingrediente"
+      }
+    }
+    return Object.keys(validationErrors.value).length === 0
+  }
+
   return {
     state,
+    validationErrors,
+    validateStep,
     nextStep,
     prevStep,
     logState

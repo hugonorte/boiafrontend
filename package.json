@@ -9,7 +9,9 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
-    "test": "vitest"
+    "test": "vitest",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.98",
@@ -23,6 +25,7 @@
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/test-utils": "^4.0.2",
     "@vitest/ui": "^4.1.4",
+    "cypress": "^15.14.1",
     "eslint": "^10.0.3",
     "happy-dom": "^20.9.0",
     "sass-embedded": "^1.99.0",

@@ -10,235 +10,118 @@ Energia líquida (mantença e ganho) FDN (fibra detergente neutro) → controle 
 - Na tela de resultado final da ração já calculada, haverá um botão "Salvar Ração" que salvará a ração calculada no backend, e uma rota para listar as rações salvas anteriormente pelo usuário.
 
 ## Modelo de UX do tipo Wizard
-- Usar o módulo Nuxt UI (que já está instalado no pacote package.json) para criar a melhor experiência de UX usando sliders, feedback visual para sucesso e erro com as propriedades nativas do Zod e Vee Validate no preenchimento de dados.
+- Usar o módulo Nuxt UI (que já está instalado no pacote package.json) para criar a melhor experiêcia de UX usando sliders, feedback visual para sucesso e erro com as propriedades nativas do Zod e Vee Validate no preenchimento de dados.
 - Usar Stepper do Nuxt UI para criar o fluxo de etapas.
 - Usar UCard para cada etapa e receber os dados do formulário.
 
 ## Detalhamento de cada uma das telas do Wizard
 
+#### Passo 1 de 4: Dados do Animal e Objetivo
+- **Título**: "Dados do animal"
+- **Subtítulo**: "Características principais e objetivo da dieta"
 
-#### Passo 1 de 4
-- **No topo da tela**  use o Stepper do Nuxt UI para mostrar o desenrolar das etapas.
+##### Estrutura de Dados e Inputs
+O Passo 1 coleta as informações biométricas essenciais para os cálculos de exigências nutricionais.
 
-##### Equações para alcançar o valor de CMS 
-**Equação 1 - Mantença**
-- Variável: Peso Vivo (PC) - Ex: 500kg
+1. **Raça do Animal**
+   - **Componente**: `USelect`
+   - **Opções**: Nelore, Angus, Braford, Charolês, Simental, Guzerá, Tabapuã, Canchim, Pantaneiro, Crioulo, Outra.
 
-**Equação 2 - Ganho de Peso (g/dia)**
-- Variável1 Variável: Ganho de Peso médio diário (g/dia) - Ex: 800g
-- Variável2: Peso Vivo (PC) - Ex: 500kg
+2. **Sexo**
+   - **Componente**: `USelect`
+   - **Opções**: Macho, Fêmea.
 
-**Equação 3 - Gestação**
-- Variável1: Peso Vivo (PC) - Ex: 500kg
-- Variável2: Dias de Gestação - Ex: 150
+3. **Idade**
+   - **Componente**: `UInput` (type: number)
+   - **Unidade**: Meses.
 
-**Equação 4 - Lactação**
-- Variável1: Peso Vivo (PC) - Ex: 500kg
-- Variável2: Produção de Leite (L/dia) - Ex: 10
-- Variável3: Percentual de gordura - Ex: 3.5
+4. **Peso Vivo (kg)**
+   - **Componente**: `UInput` (type: number)
+   - **Hint**: "Peso atual do animal".
+   - **Validação**: Obrigatório, maior que 0.
 
+##### Objetivo da Dieta
+Seleção visual do propósito nutricional usando `WizardSelectionCards`.
 
+- **Mantença**: Equação base para animais em estado de repouso.
+- **Ganho de Peso**: Para animais em fase de engorda ou crescimento.
+- **Gestação**: Ajuste baseado nos dias de gestação.
+- **Lactação**: Baseado na produção diária e gordura do leite.
 
-Título:
-👉 “Consumo de Matéria Seca (CMS)”
-Subtítulo:
-👉 “Informe os dados do animal para estimar o consumo diário”
+##### Lógica de Cálculo (Background)
+Ao informar o Peso Vivo (PV), o sistema calcula automaticamente no estado global:
+- **Peso Metabólico (PV^0.75)**: Base para cálculo de consumo.
+- **Energia Líquida de Mantença (ELm)**: Calculada como `Peso Metabólico * 0.077`.
 
-##### Input 1 — Raça do Animal
-- **Componente do NUXT UI a ser usado**: USelect
-- Opções: 
-    - Nelore
-    - Angus
-    - Braford
-    - Charolês
-    - Simental
-    - Guzerá
-    - Tabapuã
-    - Canchim
-    - Pantaneiro
-    - Crioulo
-    - Outra
-
-##### Input 2 — Peso Vivo
-- **Componente do NUXT UI a ser usado**: UInput
-
-- Tipo: number
-- Label:
-👉 Peso vivo (kg)
-- Placeholder:
-👉 "Ex: 450"
-- Hint (muito importante):
-👉 “Peso atual do animal”
-
-##### Input 3 — % do Peso Vivo (CMS)
-- **Componente do NUXT UI a ser usado**: URadioGroup
-- Opções: 
-    - 🔘 Baixo consumo (1.8%)
-    - 🔘 Médio (2.2%)
-    - 🔘 Alto (2.5%)
-    - 🔘 Personalizado
-
-- **Importante**: Ao marcar personalizado, o usuário poderá informar o valor desejado.
-- Intervalo: 1% a 3%
-- Valor padrão: 2.0%
-- Hint: 👉 “Valor típico: 2% a 2,5%”
-
-- **Validação Antes de avançar**:
-    - Peso > 0
-    - % entre 1 e 3
-
-##### Resultado do cálculo do CMS (calculado no passo anterior)
-Mostrar:
-
-- 👉 Consumo estimado: Exemplo → CMS = 10,0 kg/dia
-- **Gravar o resultado numérico do CMS em um composable**
-- 👉 Com destaque visual (use UBadge ou texto grande)
-    - 🟢 Consumo adequado
-    - 🟡 Consumo moderado
-    - 🔴 Consumo alto (alerta)
-
-💬 Abaixo dessa informação, exibir um Pequeno bloco explicativo contendo:
-- Texto: 👉 “O consumo de matéria seca representa a quantidade de alimento que o animal ingere diariamente, desconsiderando a água.”
-- **Componente do NUXT UI a ser usado**: UCard
-
-##### Botão de próximo passo
-👉 **EXIGÊNCIAS NUTRICIONAIS**
+##### Navegação
+- **Botão**: Próximo Passo: Sistema de Produção.
 
 **Fim da Tela 1 do wizard**
 
 ---
-#### Passo 2 de 4
-- **No topo da tela**  use o Stepper do Nuxt UI para mostrar o passo 2 no desenrolar das etapas.
+#### Passo 2 de 4: Sistema de Produção e Atividade
+- **Título**: "Sistema de produção"
+- **Subtítulo**: "Defina o ambiente e nível de atividade do lote"
 
-- **Título**:
-👉 “Exigências Nutricionais”
-- **Subtítulo**:
-👉 “Defina os níveis de proteína e energia da dieta”
+##### Resumo de Dados (Contexto)
+- **Componente**: `UAlert`
+- Exibe de forma persistente os dados consolidados do Passo 1 (Peso Vivo e CMS Estimado) para orientar as escolhas do sistema de produção.
 
-- **Use um UAlert mostrando o resultado do cálculo executado no passo anterior**:
-Exemplo do que deverá ser mostrado:
-  - Peso: 500 kg
-  - CMS: 10 kg/dia
-  - Esses resultados virão do passo anterior CMS (Gravado em um composable)
+##### Sistema de Produção
+Seleção do modelo de manejo através de `WizardSelectionCards`.
 
-- Use um URadioGroup para definir o objetivo da dieta com as seguintes opções:
-  - 🔘 Mantença
-  - 🔘 Cria
-  - 🔘 Recria
-  - 🔘 Terminação
-  - 🔘 Reprodução
-  - 🔘 Ganho intensivo
-  - 🔘 Personalizado
+1. **Pasto Extensivo**: Sistema tradicional em grandes áreas com baixa lotação.
+2. **Pasto Rotacionado**: Manejo intensivo de pastagem com divisão de piquetes.
+3. **Semi-confinamento**: Suplementação no cocho para animais mantidos a pasto.
+4. **Confinamento**: Engorda intensiva com dieta 100% fornecida no cocho.
 
-- **Importante**: Após o usuário selecionar uma das opções acima, o sistema deverá mostrar a seguinte tabela automaticamente
+##### Nível de Atividade
+Ajuste da intensidade física para refinamento das exigências de mantença.
 
-| Objetivo  | PB  | NDT | FDN |
-| --------- | --- | --- | --- |
-| Mantença  | 10% | 55% | 50% |
-| Moderado  | 12% | 60% | 55% |
-| Intensivo | 14% | 65% | 60% |
+- **Baixo**: Pouca movimentação ou repouso.
+- **Médio**: Nível moderado de atividade.
+- **Alto**: Alta movimentação ou terrenos íngremes.
 
-- Os valores da tabela acima, variarão de acordo com o que está especificado na tabela NRC para cada raça. Essa tabela está em um arquivo no backend.
-- Caso o usuário selecione "Personalizado", o sistema deverá mostrar um input para que o usuário informe o valor desejado.
-- Os valores da tabela acima deverão ser gravados no composable de resultados do passo 2.
-
-
-
-##### Botão de próximo passo
-👉 **INGREDIENTES DISPONÍVEIS**
+##### Navegação
+- **Botão**: Próximo Passo: Ingredientes.
 
 **Fim da Tela 2 do wizard**
 
 ---
 
-#### Passo 3 de 4
-- **No topo da tela**  use o Stepper do Nuxt UI para mostrar o passo 3 no desenrolar das etapas.
+#### Passo 3 de 4: Ingredientes e Formulação
+- **Título**: "Ingredientes e Formulação da Dieta"
+- **Subtítulo**: "Selecione os ingredientes e monte a ração"
 
-- **Título**:
-👉 “Ingredientes e Formulação da Dieta”
-- **Subtítulo**:
-👉 “Selecione os ingredientes e monte a ração”
+##### Resumo Consolidado
+- **Componente**: `UAlert`
+- Exibe o resumo do animal, CMS e sistema de produção para referência durante a escolha dos ingredientes.
 
-- Use o componente **UCard** da Nuxt UI para exibir os dados das etapas anteriores, que ficaram gravados no composable, por exemplo:
-    - Animal selecionado: Nelore, macho, 500kg
-    - CMS: 10 kg/dia
-    - PB necessária: 1,2 kg/dia
-    - Energia: 6,5 kg NDT/dia
+##### Modo de Balanceamento
+- **Automático**: O sistema sugere a melhor combinação (processado no backend).
+- **Manual**: O usuário seleciona os ingredientes e ajusta as proporções.
 
-##### Tipo de escolha de ingredientes
-- Use o componente **URadioGroup** da Nuxt UI para definir o modo de balanceamento da ração.
-- **Opções**:
-- 🔘 Manual (voltado para técnicos)
-- 🔘 Automático (voltado para usuários iniciantes)
+##### Fluxo de Seleção Manual (Cesta de Ingredientes)
+Interface dinâmica composta por três áreas principais:
 
-###### Escolha automática de ingredientes (fluxo iniciante)
-- Caso o usuário escolha "Automático", na tela deverá aparecer outros dois componentes **URadioGroup** exibindo as seguintes opções:
+1. **Ingredientes Selecionados (Cesta)**
+   - Exibe apenas os itens já escolhidos pelo usuário.
+   - Permite remoção rápida ao clicar no card ou através do botão "Limpar tudo".
 
-- **Opções**:
-- 🔘 Quero escolher os ingredientes
-- 🔘 Escolha os ingredientes por mim
+2. **Principais Ingredientes (Sugestões)**
+   - Exibe os 10 ingredientes mais comuns (Milhos, Farelos, Silagens) em cards responsivos (flexbox).
+   - Cada card exibe: Nome, PB (%), EM, e Custo (R$/Kg).
 
-- **Importante**: Caso o usuário escolha "Quero escolher os ingredientes", o sistema deverá mostrar uma tabela com duas colunas. Uma coluna contendo um componente **UChec** (simular usando **UCheckbox**) para marcação e outra coluna com os ingredientes disponíveis, por exemplo: (esses ingredientes deverão vir do banco de dados, podendo ser cadastrados pelo usuário)
+3. **Busca Inteligente**
+   - Campo de input para localizar qualquer item na base de 50+ ingredientes.
+   - **Recurso**: Normalização de texto (ignora acentos e maiúsculas/minúsculas).
+   - Resultados exibidos em tempo real abaixo da barra de busca.
 
-| ✓ | Ingrediente    
-|---|-----------    
-|   | Milho          
-|   | Farelo de soja 
-|   | Silagem        
-|   | Capim          
-|   | Núcleo mineral 
+##### Lógica de Estado
+- Os ingredientes selecionados são armazenados no array `step3.selectedIngredients` do composable global, garantindo que os valores nutricionais e custos de cada item estejam disponíveis para o cálculo final no Passo 4.
 
-Caso o usuário escolha “Escolha os ingredientes por mim”, o sistema fará (no backend) a escolha dos ingredientes com base no perfil do animal e dos objetivos da dieta marcados nos passos anteriores (que ficaram salvos no composable). 
-
-###### Escolha customizada de ingredientes (fluxo técnico)
-
-- O sistema deverá mostrar uma tabela com duas colunas. Uma coluna contendo um componente **UChec** (simular usando **UCheckbox**) para marcação e outra coluna com os ingredientes disponíveis, por exemplo: (esses ingredientes deverão vir do banco de dados, podendo ser cadastrados pelo usuário)
-
-| ✓ | Ingrediente    
-|---|-----------    
-|   | Milho          
-|   | Farelo de soja 
-|   | Silagem        
-|   | Capim          
-|   | Núcleo mineral 
-
-##### Seletor de modo
-- Após escolher os ingredientes na tabela acima, o usuário exibirá uma tabela completa com o título **"Composição da Dieta"** mostrando os ingredientes selecionados e os valores nutricionais (PB, NDT, FDN, FDA, MS) e o custo (R$/kg) (baseados na tabela NRC)
-
-| Ingrediente   | PB (%) | NDT (%) | FDN (%) | FDA (%) | MS (%) | Custo (R$/kg) |
-| ------ | ------- | ------- | ------- | ------ | ------------- |
-| 8      | 85      | 10      | 2       | 88     | 1.0           |
-| 45     | 75      | 15      | 5       | 90     | 2.0           |
-| 8      | 60      | 50      | 30      | 35     | 0.5           |
-| 10     | 55      | 60      | 35      | 25     | 0.3           |
-| 0      | 0       | 0       | 0       | 100    | 5.0           |
-
-
-
-- Dados adicionais (avançado)
-
-- PB mínima (%)
-- NDT mínimo (%)
-- FDN mínima (%)
-- FDA mínima (%)
-- MS mínima (%)
-- Limite de concentrado (%)
-- Fibra mínima (%)
-- Restrição de ingredientes
-
-**Importante** - Nessa opção, a tabela será editável pelo usuário, que poderá aumentar ou diminuir a quantidade de cada ingrediente, e o sistema deverá recalcular os valores nutricionais e o custo total da ração, em tempo real.
-- Caso o usuário edite qualquer valor na tabela, deverá aparecer automaticamente um botão de "de "Reset"" para que ele possa resetar os valores para os valores originais.
-- Após preenchidos os valores, o sistema deverá mostrar uma tabela com o resultado do balanceamento, mostrando os ingredientes selecionados e os valores nutricionais (PB, NDT, FDN, FDA, MS) e o custo (R$/kg) (baseados na tabela NRC)
-- Caso exista algum desbalanceamento entre os ingredientes, o sistema deverá mostrar alertas em tempo real
-- Exemplo de alertas:
-    - 🔴 “Proteína insuficiente”
-    - 🟡 “Excesso de concentrado”
-    - 🔴 “Risco de acidose”
-
-
-
-##### Botão de próximo passo
-👉 **RESULTADOS**
+##### Navegação
+- **Botão**: Próximo Passo: Resultado.
 
 **Fim da Tela 3 do wizard**
 
@@ -288,56 +171,43 @@ Mostrar em tempo real:
     - 🟡 “Excesso de concentrado”
     - 🔴 “Risco de acidose”
 
-#### Relatório final detalhado 
+#### 4. Passo 4: Resultado da Seleção
+Esta tela apresenta um resumo detalhado de todos os ingredientes selecionados no passo anterior, permitindo que o usuário valide as informações nutricionais antes de prosseguir para o cálculo final ou salvar a dieta.
 
-###### Ingredientes com percentual
-- Use o componente **UProgress** da Nuxt UI para mostrar o % ideal calculado para cada ingrediente, mostrando em uma linha o nome do ingrediente e a barra com o percentual por exemplo:
-    - Ingrediente 1: 50% ✅
-    - Ingrediente 2: 30% 🟡
-    - Ingrediente 3: 20% 🔴
+###### Elementos da Interface (Fase 1: Resumo da Seleção)
+- **Título da Etapa:** "Resumo da Seleção"
+- **Descrição:** "Confira abaixo os ingredientes selecionados e seus respectivos valores nutricionais."
+- **Tabela de Resultados (UTable):**
+  - **Colunas:**
+    - `Ingrediente`: Nome do alimento (exibido em negrito).
+    - `MS (%)`: Matéria Seca.
+    - `PB (%)`: Proteína Bruta (exibida com um `UBadge` verde).
+    - `FDN (%)`: Fibra em Detergente Neutro.
+    - `EM (Mcal)`: Energia Metabolizável.
+    - `Custo (R$/kg)`: Preço informado ou padrão.
+- **Estado Vazio (Empty State):** Caso nenhum ingrediente tenha sido selecionado, exibe uma mensagem de alerta com um ícone e um botão para retornar ao Passo 3.
 
-- Abaixo, deve aparecer um botão contendo o seguinte label: "Ver tabela completa"
+###### Relatório Final (Fase 2: Após Cálculo)
+*(Implementação futura baseada no backend)*
+- Exibição de gráficos de barra para percentuais de inclusão.
+- Alertas nutricionais (ex: "Proteína insuficiente", "Risco de acidose").
+- Botões para exportar PDF/Excel.
+- Opção "Salvar Dieta".
 
-Cso o usuário clique no botão acima, o sistema deverá mostrar uma tabela completa contendo as colunas:
+---
 
-- Ingrediente
-- %
-- kg/dia
-- PB contribuída
-- Energia contribuída
-- Custo
+## Metodologia e Garantia de Qualidade (QA)
 
-###### Resumo Nutricional
+### Testes E2E (Cypress)
+O projeto utiliza Cypress para garantir a integridade dos fluxos críticos.
+- **Suite Validada:** `cypress/e2e/passo-1.cy.ts`
+- **Cobertura:** Validação de inputs numéricos, seleção de cards agro-premium e navegação entre etapas.
+- **Padrão de Seletores:** Priorizar seletores resilientes baseados em labels e no atributo `[data-slot="root"]` do Nuxt UI v4 para evitar quebras por alterações estruturais do framework.
 
-Mostrar uma tabela com 3 colunas mostrando as seguintes informações:
-
-| Nutriente | % Ideal | Atingido |
-|-----------|---------|----------|
-| PB        | 12%     | 14% ✅   |
-| NDT       | 65%     | 60% 🟡   |
-| FDN       | 35%     | 40% 🔴   |
-
-###### Resumo Econômico
-
-Mostrar uma tabela com 3 colunas mostrando as seguintes informações:
-
-| Custo | R$/dia | R$/kg |
-|-------|--------|-------|
-| Custo | R$ 10,00 | R$ 1,00 |
-
-Caso algum dos itens acima esteja fora do ideal, o sistema deverá mostrar um alerta em tempo real (ex: 🔴 PB insuficiente, 🟡 NDT insuficiente, 🔴 FDN insuficiente) e mostrar algumas recomendações, como por exemplo:
-- Aumentar farelo de soja para elevar proteína
-- Adicionar fonte de fibra
-- Reduzir concentrado para evitar acidose
-
-###### Exportar Relatório
-
-- Botão para gerar PDF
-- Botão para gerar Excel
-
-👉 **SALVAR DIETA**
-
-**Fim da Tela 4 do wizard**
+### Metodologia de Desenvolvimento
+- **TDD (Test Driven Development)**: Sempre que possível, criar o teste antes da funcionalidade.
+- **Filosofia DRY**: Uso extensivo de composables (ex: `useWizardState`) para evitar duplicação de lógica.
+- **Responsividade**: Mobile-first, garantindo que o Wizard seja utilizável em smartphones no campo.
 
 ---
 
@@ -446,4 +316,28 @@ Para garantir que os estilos sejam aplicados corretamente e sigam o padrão do p
 ## Plano de Verificação
 - Verificação visual em múltiplos breakpoints.
 - Simulação de erros de API para garantir mensagens amigáveis ao usuário.
+### Nuxt UI v4 Implementation Patterns
 
+### Nuxt UI v4 Implementation Patterns (TanStack Table)
+
+#### UTable Requirements
+Nuxt UI v4 `UTable` is powered by TanStack Table. To ensure correct data mapping and reactivity:
+- **Column Definitions**: Use `accessorKey` for data mapping and `header` for the column label. 
+- **Slot Pattern**: Customizing cells requires the `#<accessorKey>-cell` slot. The slot scope provides a `cell` object; use `cell.getValue()` to access the data.
+- **SSR/Hydration**: Always wrap `UTable` in `<ClientOnly>` when dealing with client-side state (like Wizard state) to prevent hydration mismatches.
+- **Empty State**: Use the `#empty` slot to handle cases with no data gracefully.
+
+Example:
+```typescript
+const columns = [
+    { accessorKey: 'nome', header: 'Ingrediente' },
+    { accessorKey: 'ms', header: 'MS (%)' }
+]
+```
+
+Slot Example:
+```vue
+<template #nome-cell="{ cell }">
+  <span>{{ cell.getValue() }}</span>
+</template>
+```
