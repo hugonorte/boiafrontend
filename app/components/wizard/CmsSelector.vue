@@ -19,7 +19,7 @@ const { state } = useWizardState()
 
 const estimatedCMS = (pesoVivo: number, cms: number) => {
   const result = ((pesoVivo || 0) * (cms || 0)) / 100
-  state.value.step1.totalCMS = result
+  state.value.step1.initialCMSEstimate = result
   return result
 }
 
@@ -80,14 +80,14 @@ const handleCustomInput = () => {
     </div>
 
     <div class="mt-4 p-4 bg-gray-50 rounded-lg text-center border-2 border-dashed border-gray-200">
-      <template v-if="props.pesoVivo > 0 && state.step1.totalCMS > 0">
+      <template v-if="props.pesoVivo > 0 && state.step1.initialCMSEstimate > 0">
         <div class="text-slate-800">
           <p class="text-sm text-slate-500 uppercase font-bold tracking-wider mb-1">Consumo Estimado</p>
           <p class="text-3xl font-black text-primary-600">
-            {{ state.step1.totalCMS.toFixed(2) }} <span class="text-lg">kg/dia</span>
+            {{ state.step1.initialCMSEstimate.toFixed(2) }} <span class="text-lg">kg/dia</span>
           </p>
           <UBadge color="primary" variant="subtle" class="mt-2 font-bold">
-            {{ ((state.step1.totalCMS / props.pesoVivo) * 100).toFixed(1) }}% do Peso Vivo
+            {{ ((state.step1.initialCMSEstimate / props.pesoVivo) * 100).toFixed(1) }}% do Peso Vivo
           </UBadge>
           <UAlert icon="i-lucide-info" color="neutral" variant="subtle" class="mt-4" description="O consumo de matéria seca representa a quantidade de alimento que o animal ingere diariamente, desconsiderando a água." />
         </div>

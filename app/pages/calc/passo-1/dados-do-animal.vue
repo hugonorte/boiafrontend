@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import CmsSelector from '~/components/wizard/CmsSelector.vue'
+
 definePageMeta({
     layout: 'wizard'
 })
@@ -75,6 +77,7 @@ const handleWeightInput = (val: any) => {
                 </div>
             </div>
         </UFormField>
+        <CmsSelector :pesoVivo="Number(state.step1.liveWeight)"/>
     </div>
 </template>
 

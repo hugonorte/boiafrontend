@@ -122,7 +122,7 @@ const isSelected = (id: number) => {
             color="primary" 
             variant="subtle"
             title="Dados Consolidados"
-            :description="`Animal: ${state.step1.animalRace} | CMS: ${state.step1.totalCMS.toFixed(2)} kg/dia | Sistema: ${state.step2.productionSystem.replace('_', ' ')}`"
+            :description="`Animal: ${state.step1.animalRace} | CMS: ${state.step1.initialCMSEstimate.toFixed(2)} kg/dia | Sistema: ${state.step2.productionSystem.replace('_', ' ')}`"
         />
 
         <!-- Escolha do Modo -->
@@ -132,6 +132,17 @@ const isSelected = (id: number) => {
                 :items="balanceModes" 
             />
         </UFormField>
+
+        <!-- Alerta de Validação de Ingredientes -->
+        <UAlert 
+            v-if="validationErrors.selectedIngredients"
+            icon="i-heroicons-exclamation-triangle"
+            color="error"
+            variant="soft"
+            title="Atenção: Seleção Incompleta"
+            :description="validationErrors.selectedIngredients"
+            class="mb-4"
+        />
 
         <USeparator v-if="state.step3.balanceMode" />
 

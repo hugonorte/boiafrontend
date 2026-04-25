@@ -8,6 +8,7 @@ export interface Ingredient {
   pb: number
   fdn: number
   em: number
+  eb: number
   custo: number
   amountKg?: number
 }
@@ -22,7 +23,7 @@ const globalState = ref({
     cmsPercentage: 0,
     cmsCustomValue: null as number | null,
     isCustomCMS: false,
-    totalCMS: 0,
+    initialCMSEstimate: 0,
     pesoMetabolico: 0,
     EnergiaLiquidaMantenca: 0,
     sex: '',
@@ -41,6 +42,13 @@ const globalState = ref({
     dailyCost: 0
   },
   step4: {
+    energiaBrutaMedia: 0,
+    EMdieta: 0,
+    EBDieta: 0,
+    Q: 0,
+    Km: 0,
+    EMm: 0,
+    cmsReal: 0,
     recommendations: [] as string[]
   }
 })
@@ -82,6 +90,20 @@ export const useWizardState = () => {
     } else if (stepNumber === 3) {
       if (!state.value.step3.selectedIngredients || state.value.step3.selectedIngredients.length === 0) {
         validationErrors.value.selectedIngredients = "Selecione pelo menos um ingrediente"
+      } else if (state.value.step1.dietObjective === 'Mantença') {
+        // Validação específica para Mantença: Necessário Volumoso, Energético e Proteico
+        const selectedCats = state.value.step3.selectedIngredients.map(i => i.categoria.toLowerCase())
+        const hasVolumoso = selectedCats.some(cat => cat.includes('volumoso'))
+        const hasEnergetico = selectedCats.some(cat => cat.includes('energético'))
+        const hasProteico = selectedCats.some(cat => cat.includes('proteico'))
+
+        if (!hasVolumoso || !hasEnergetico || !hasProteico) {
+          let missing = []
+          if (!hasVolumoso) missing.push('Volumoso')
+          if (!hasEnergetico) missing.push('Energético')
+          if (!hasProteico) missing.push('Proteico')
+          validationErrors.value.selectedIngredients = `Para o objetivo Mantença, selecione pelo menos um ingrediente de cada categoria: ${missing.join(', ')}`
+        }
       }
     }
     return Object.keys(validationErrors.value).length === 0

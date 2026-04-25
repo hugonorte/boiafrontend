@@ -124,6 +124,47 @@ Interface dinâmica composta por três áreas principais:
 - **Botão**: Próximo Passo: Resultado.
 
 **Fim da Tela 3 do wizard**
+---
+
+## Algoritmos de Cálculo por Objetivo
+
+### 1. Objetivo: Mantença
+Este algoritmo é ativado quando `step1.dietObjective === 'Mantença'`. Ele define as proporções da dieta e realiza o cálculo de eficiência energética.
+
+#### A. Seleção e Categorização (Passo 3 para 4)
+Ao tentar avançar para o Passo 4, o sistema deve:
+1. **Categorizar** os ingredientes em `step3.selectedIngredients` nas categorias: `Volumoso`, `Energético` e `Proteico`.
+2. **Regra de Seleção Única**: Se houver mais de um ingrediente na mesma categoria, o sistema selecionará automaticamente o de **menor custo** (`custo`) para os cálculos.
+3. **Bloqueio de Navegação**: Caso faltem ingredientes em qualquer uma das três categorias, o sistema deve impedir o avanço para o Passo 4 e exibir um alerta no Passo 3.
+
+#### B. Estimativa de Quantidades (MS)
+As quantidades baseadas na estimativa inicial (`initialCMSEstimate`) são:
+- **Volumoso**: `initialCMSEstimate * 0.6` (Kg MS)
+- **Energético**: `initialCMSEstimate * 0.3` (Kg MS)
+- **Proteico**: `initialCMSEstimate * 0.1` (Kg MS)
+
+#### C. Sequência de Cálculos Nutricionais (Passo 4)
+Os resultados devem ser armazenados em `step4`:
+
+1. **EMDieta (Energia Metabolizável da Dieta)**:
+   - `EmVolumoso = EM_volumoso * 0.7`
+   - `EmEnergetico = EM_energetico * 0.2`
+   - `EmProteico = EM_proteico * 0.1`
+   - `step4.EMdieta = EmVolumoso + EmEnergetico + EmProteico`
+
+2. **EBDieta (Energia Bruta da Dieta)**:
+   - `EbVolumoso = EB_volumoso * 0.7`
+   - `EbEnergetico = EB_energetico * 0.2`
+   - `EbProteico = EB_proteico * 0.1`
+   - `step4.EBDieta = EbVolumoso + EbEnergetico + EbProteico`
+
+3. **Eficiência Energética (Q e Km)**:
+   - `step4.Q = EMdieta / EBDieta`
+   - `step4.Km = (0.35 * Q) + 0.503`
+
+4. **Necessidade e Consumo Real**:
+   - `step4.EMm = EnergiaLiquidaMantenca / Km`
+   - `step4.cmsReal = EMm / EMdieta`
 
 ---
 #### Passo 4 de 4

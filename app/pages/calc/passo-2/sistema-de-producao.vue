@@ -12,11 +12,11 @@ const { state } = useWizardState()
     <UContainer class="step-container">
         <!-- Resumo do Passo 1 -->
         <UAlert 
-            icon="i-heroicons-information-circle" 
+            icon="i-heroicons-building-office-2" 
             color="primary" 
             variant="subtle"
-            title="Dados do Animal"
-            :description="`Peso Vivo: ${state.step1.liveWeight}kg | CMS Estimado: ${state.step1.totalCMS.toFixed(2)} kg/dia`"
+            title="Sistema de Produção"
+            :description="`Peso Vivo: ${state.step1.liveWeight}kg | CMS Estimado: ${state.step1.initialCMSEstimate.toFixed(2)} kg/dia`"
         />
         <WizardSistemaProducao />
     </UContainer>
