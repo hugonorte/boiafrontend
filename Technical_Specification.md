@@ -138,7 +138,7 @@ Ao tentar avançar para o Passo 4, o sistema deve:
 3. **Bloqueio de Navegação**: Caso faltem ingredientes em qualquer uma das três categorias, o sistema deve impedir o avanço para o Passo 4 e exibir um alerta no Passo 3.
 
 #### B. Estimativa de Quantidades (MS)
-As quantidades baseadas na estimativa inicial (`initialCMSEstimate`) são:
+As quantidades baseadas na estimativa inicial (`initialCMSEstimate`) are:
 - **Volumoso**: `initialCMSEstimate * 0.6` (Kg MS)
 - **Energético**: `initialCMSEstimate * 0.3` (Kg MS)
 - **Proteico**: `initialCMSEstimate * 0.1` (Kg MS)
@@ -243,6 +243,7 @@ Esta tela apresenta um resumo detalhado de todos os ingredientes selecionados no
 O projeto utiliza Cypress para garantir a integridade dos fluxos críticos.
 - **Suite Validada:** `cypress/e2e/passo-1.cy.ts`
 - **Cobertura:** Validação de inputs numéricos, seleção de cards agro-premium e navegação entre etapas.
+- **CI/CD Robustness:** O build automatizado em ambiente de integração contínua não deve falhar devido a erros de linting ou formatação de código. O foco deve ser a funcionalidade e estabilidade do sistema.
 - **Padrão de Seletores:** Priorizar seletores resilientes baseados em labels e no atributo `[data-slot="root"]` do Nuxt UI v4 para evitar quebras por alterações estruturais do framework.
 
 ### Metodologia de Desenvolvimento
