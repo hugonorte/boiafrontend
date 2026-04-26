@@ -3,28 +3,28 @@ const { state, validationErrors } = useWizardState()
 
 const systems = [
     { 
-        label: 'Pasto extensivo', 
+        label: 'Pasto Contínuo', 
         value: 'pasto_extensivo', 
         icon: 'i-heroicons-sun', 
-        description: 'Sistema tradicional em grandes áreas com baixa lotação.' 
+        description: 'Extensivo' 
     },
     { 
         label: 'Pasto rotacionado', 
         value: 'pasto_rotacionado', 
         icon: 'i-heroicons-arrow-path', 
-        description: 'Manejo intensivo de pastagem com divisão de piquetes.' 
+        description: 'Extensivo' 
     },
     { 
         label: 'Semi-confinamento', 
         value: 'semi_confinamento', 
         icon: 'i-heroicons-home', 
-        description: 'Suplementação no cocho para animais mantidos a pasto.' 
+        description: 'Semi-intensivo' 
     },
     { 
         label: 'Confinamento', 
         value: 'confinamento', 
         icon: 'i-heroicons-building-office-2', 
-        description: 'Engorda intensiva com dieta 100% fornecida no cocho.' 
+        description: 'Intensivo' 
     }
 ]
 
