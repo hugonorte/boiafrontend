@@ -5,9 +5,19 @@ export default defineNuxtConfig({
     '@nuxt/ui'
   ],
 
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
+      ]
+    }
+  },
+
   devtools: {
     enabled: true
   },
+
+  sourcemap: false,
 
   css: ['~/assets/css/app.css'],
 
@@ -36,6 +46,17 @@ export default defineNuxtConfig({
       stylistic: {
         commaDangle: 'never',
         braceStyle: '1tbs'
+      }
+    }
+  },
+
+  hooks: {
+    'nitro:config'(nitroConfig) {
+      if (nitroConfig.imports) {
+        // Suppress "Duplicated imports useAppConfig" warning by removing duplicate registration
+        nitroConfig.imports.imports = (nitroConfig.imports.imports || []).filter(
+          (i: any) => i?.name !== 'useAppConfig'
+        )
       }
     }
   }
