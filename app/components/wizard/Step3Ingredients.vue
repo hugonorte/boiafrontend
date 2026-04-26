@@ -46,8 +46,12 @@ const pbBalance = computed(() => {
     <!-- Header with Cost Highlight -->
     <header class="step-header mb-8 flex justify-between items-end">
       <div>
-        <h2 class="title">Formulação da Ração</h2>
-        <p class="subtitle">Selecione e ajuste as quantidades dos ingredientes.</p>
+        <h2 class="title">
+          Formulação da Ração
+        </h2>
+        <p class="subtitle">
+          Selecione e ajuste as quantidades dos ingredientes.
+        </p>
       </div>
       <div class="cost-highlight">
         <span class="label">CUSTO ESTIMADO</span>
@@ -127,11 +131,17 @@ const pbBalance = computed(() => {
           </header>
           <div class="balance-bars space-y-4 mt-4">
             <div class="bar-item">
-              <div class="bar-info"><span>Proteína Bruta (PB)</span><span>{{ pbBalance }}%</span></div>
+              <div class="bar-info">
+                <span>Proteína Bruta (PB)</span>
+                <span>{{ pbBalance }}%</span>
+              </div>
               <UMeter :value="pbBalance" color="primary" />
             </div>
             <div class="bar-item">
-              <div class="bar-info"><span>Energia (NDT)</span><span>92%</span></div>
+              <div class="bar-info">
+                <span>Energia (NDT)</span>
+                <span>92%</span>
+              </div>
               <UMeter :value="92" color="blue" />
             </div>
           </div>

@@ -26,8 +26,12 @@ const nutrients = [
     <!-- Header with MN Highlight -->
     <header class="step-header mb-8 flex justify-between items-end">
       <div>
-        <h2 class="title">Resultado Final</h2>
-        <p class="subtitle">Confira a composição e análise nutricional da dieta.</p>
+        <h2 class="title">
+          Resultado Final
+        </h2>
+        <p class="subtitle">
+          Confira a composição e análise nutricional da dieta.
+        </p>
       </div>
       <div class="mass-highlight">
         <span class="label">MASSA TOTAL (MN)</span>
@@ -84,11 +88,15 @@ const nutrients = [
           <ul class="insights-list space-y-2 mt-4">
             <li class="insight-item">
               <UIcon name="i-heroicons-check" />
-              <span>A relação volumoso:concentrado está ideal para o ganho de peso pretendido.</span>
+              <span>
+                A relação volumoso:concentrado está ideal para o ganho de peso pretendido.
+              </span>
             </li>
             <li class="insight-item">
               <UIcon name="i-heroicons-light-bulb" />
-              <span>Dica: Verifique a qualidade da silagem, pois ela representa 38% da dieta.</span>
+              <span>
+                Dica: Verifique a qualidade da silagem, pois ela representa 38% da dieta.
+              </span>
             </li>
           </ul>
         </div>

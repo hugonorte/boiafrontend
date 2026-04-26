@@ -34,8 +34,12 @@ const cmsStatus = computed(() => {
     <UCard class="premium-card">
       <template #header>
         <div class="text-center">
-          <h2 class="text-2xl font-bold text-gray-900">Consumo de Matéria Seca (CMS)</h2>
-          <p class="text-gray-500">Informe os dados do animal para estimar o consumo diário</p>
+          <h2 class="text-2xl font-bold text-gray-900">
+            Consumo de Matéria Seca (CMS)
+          </h2>
+          <p class="text-gray-500">
+            Informe os dados do animal para estimar o consumo diário
+          </p>
         </div>
       </template>
 
@@ -65,7 +69,9 @@ const cmsStatus = computed(() => {
 
       <template #footer>
         <div v-if="state.step1.liveWeight > 0" class="mt-4 p-4 bg-gray-50 rounded-lg text-center">
-          <p class="text-lg font-semibold">Consumo estimado: CMS = {{ cmsResult.toFixed(2) }} kg/dia</p>
+          <p class="text-lg font-semibold">
+            Consumo estimado: CMS = {{ cmsResult.toFixed(2) }} kg/dia
+          </p>
           <UBadge :color="cmsStatus.color" variant="solid" class="mt-2">
             {{ cmsStatus.label }}
           </UBadge>
@@ -83,19 +89,19 @@ const cmsStatus = computed(() => {
 
 <style lang="scss">
 .premium-card {
-  border-radius: 24px;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
 
-  .text-gray-900 {
-    color: #1e293b;
-  }
+    .text-gray-900 {
+        color: #1e293b;
+    }
 }
 
 .step-content {
-  max-width: 600px;
-  margin: 0 auto;
+    max-width: 600px;
+    margin: 0 auto;
 }
 </style>

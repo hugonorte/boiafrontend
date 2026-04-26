@@ -34,8 +34,12 @@ const selectObjective = (id: string) => {
         <span class="label">ANIMAL:</span>
         <span class="value">{{ state.step1.animalRace }} | {{ state.step1.liveWeight }}kg | CMS: {{ cmsResult.toFixed(1) }}kg</span>
       </div>
-      <h2 class="title">Exigências Nutricionais</h2>
-      <p class="subtitle">Defina o objetivo da dieta para estabelecer os níveis ideais.</p>
+      <h2 class="title">
+        Exigências Nutricionais
+      </h2>
+      <p class="subtitle">
+        Defina o objetivo da dieta para estabelecer os níveis ideais.
+      </p>
     </header>
 
     <div class="form-container space-y-8">
@@ -110,13 +114,19 @@ const selectObjective = (id: string) => {
           </header>
           <div class="ref-body">
             <div class="ref-row header">
-              <span>Fase</span><span>PB %</span><span>NDT %</span>
+              <span>Fase</span>
+              <span>PB %</span>
+              <span>NDT %</span>
             </div>
             <div class="ref-row">
-              <span>Recria</span><span>14-16%</span><span>68-72%</span>
+              <span>Recria</span>
+              <span>14-16%</span>
+              <span>68-72%</span>
             </div>
             <div class="ref-row">
-              <span>Terminação</span><span>12-14%</span><span>75-82%</span>
+              <span>Terminação</span>
+              <span>12-14%</span>
+              <span>75-82%</span>
             </div>
           </div>
         </div>
