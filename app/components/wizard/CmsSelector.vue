@@ -49,8 +49,8 @@ const handleCustomInput = () => {
   <div class="cms-selector-component">
     <label v-if="label" class="group-label">{{ label }}</label>
     <div class="segmented-control">
-      <button 
-        v-for="preset in cmsPresets" 
+      <button
+        v-for="preset in cmsPresets"
         :key="preset.value"
         class="segment-btn"
         :class="{ active: state.step1.cmsPercentage === preset.value && !state.step1.isCustomCMS }"
@@ -58,7 +58,7 @@ const handleCustomInput = () => {
       >
         {{ preset.label }}
       </button>
-      <button 
+      <button
         class="segment-btn"
         :class="{ active: state.step1.isCustomCMS }"
         @click="state.step1.isCustomCMS = !state.step1.isCustomCMS"
@@ -69,11 +69,11 @@ const handleCustomInput = () => {
     </div>
 
     <div v-if="state.step1.isCustomCMS" class="custom-input-wrapper mt-4">
-      <UInput 
-        v-model="state.step1.cmsCustomValue" 
-        type="number" 
-        step="0.1" 
-        placeholder="Informe o valor (ex: 2.2)" 
+      <UInput
+        v-model="state.step1.cmsCustomValue"
+        type="number"
+        step="0.1"
+        placeholder="Informe o valor (ex: 2.2)"
         size="lg"
         @update:model-value="handleCustomInput"
       />
@@ -82,7 +82,9 @@ const handleCustomInput = () => {
     <div class="mt-4 p-4 bg-gray-50 rounded-lg text-center border-2 border-dashed border-gray-200">
       <template v-if="props.pesoVivo > 0 && state.step1.initialCMSEstimate > 0">
         <div class="text-slate-800">
-          <p class="text-sm text-slate-500 uppercase font-bold tracking-wider mb-1">Consumo Estimado</p>
+          <p class="text-sm text-slate-500 uppercase font-bold tracking-wider mb-1">
+            Consumo Estimado
+          </p>
           <p class="text-3xl font-black text-primary-600">
             {{ state.step1.initialCMSEstimate.toFixed(2) }} <span class="text-lg">kg/dia</span>
           </p>
@@ -93,9 +95,11 @@ const handleCustomInput = () => {
         </div>
       </template>
       <template v-else>
-        <p class="text-sm text-gray-400 italic">Aguardando definição do Peso Vivo e CMS...</p>
+        <p class="text-sm text-gray-400 italic">
+          Aguardando definição do Peso Vivo e CMS...
+        </p>
       </template>
-    </div>  
+    </div>
   </div>
 </template>
 
@@ -117,7 +121,7 @@ const handleCustomInput = () => {
     padding: 0.25rem;
     border-radius: 12px;
     gap: 0.25rem;
-    
+
     .segment-btn {
       flex: 1;
       padding: 0.75rem 0.5rem;
@@ -132,7 +136,7 @@ const handleCustomInput = () => {
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      
+
       &.active {
         background-color: white;
         color: #075a26;
