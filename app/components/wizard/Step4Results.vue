@@ -34,24 +34,38 @@ const nutrients = [
         </p>
       </div>
       <div class="mass-highlight">
-        <span class="label">MASSA TOTAL (MN)</span>
-        <span class="value">18,2 <small>kg/dia</small></span>
+        <span class="label">
+          MASSA TOTAL (MN)
+        </span>
+        <span class="value">
+          18,2 <small>kg/dia</small>
+        </span>
       </div>
     </header>
 
     <div class="results-container space-y-8">
       <!-- 1. Composition List -->
       <section class="composition-section">
-        <label class="group-label">Composição da Ração (% MS)</label>
+        <label class="group-label">
+          Composição da Ração (% MS)
+        </label>
         <div class="composition-grid grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <div v-for="res in results" :key="res.name" class="comp-card">
             <div class="comp-info">
-              <span class="name">{{ res.name }}</span>
-              <span class="mn-val">{{ res.mn }} kg MN</span>
+              <span class="name">
+                {{ res.name }}
+              </span>
+              <span class="mn-val">
+                {{ res.mn }} kg MN
+              </span>
             </div>
             <div class="comp-percentage">
-              <span class="val">{{ res.percentage }}%</span>
-              <div class="mini-bar"><div class="fill" :style="{ width: res.percentage + '%' }" /></div>
+              <span class="val">
+                {{ res.percentage }}%
+              </span>
+              <div class="mini-bar">
+                <div class="fill" :style="{ width: res.percentage + '%' }" />
+              </div>
             </div>
           </div>
         </div>
@@ -59,20 +73,40 @@ const nutrients = [
 
       <!-- 2. Nutritional Table -->
       <section class="analysis-section">
-        <label class="group-label">Análise Nutricional</label>
+        <label class="group-label">
+          Análise Nutricional
+        </label>
         <div class="nutritional-table mt-4">
           <div class="table-header">
-            <span>Nutriente</span>
-            <span>Meta</span>
-            <span>Alcançado</span>
-            <span>Status</span>
+            <span>
+              Nutriente
+            </span>
+            <span>
+              Meta
+            </span>
+            <span>
+              Alcançado
+            </span>
+            <span>
+              Status
+            </span>
           </div>
           <div v-for="nut in nutrients" :key="nut.name" class="table-row">
-            <span class="nut-name">{{ nut.name }}</span>
-            <span class="nut-goal">{{ nut.goal }} {{ nut.unit }}</span>
-            <span class="nut-actual" :class="{ 'text-green-600': nut.status === 'ok' }">{{ nut.actual }} {{ nut.unit }}</span>
+            <span class="nut-name">
+              {{ nut.name }}
+            </span>
+            <span class="nut-goal">
+              {{ nut.goal }} {{ nut.unit }}
+            </span>
+            <span class="nut-actual" :class="{ 'text-green-600': nut.status === 'ok' }">
+              {{ nut.actual }} {{ nut.unit }}
+            </span>
             <span class="nut-status">
-              <UIcon v-if="nut.status === 'ok'" name="i-heroicons-check-circle" class="text-green-600" />
+              <UIcon
+                v-if="nut.status === 'ok'"
+                name="i-heroicons-check-circle"
+                class="text-green-600"
+              />
             </span>
           </div>
         </div>
@@ -83,7 +117,9 @@ const nutrients = [
         <div class="ai-insights-card">
           <header class="card-header">
             <UIcon name="i-heroicons-sparkles" class="text-amber-500" />
-            <span>INSIGHTS DO ASSISTENTE BOIA</span>
+            <span>
+              INSIGHTS DO ASSISTENTE BOIA
+            </span>
           </header>
           <ul class="insights-list space-y-2 mt-4">
             <li class="insight-item">
@@ -104,8 +140,22 @@ const nutrients = [
 
       <!-- 4. Secondary Actions -->
       <div class="export-actions flex gap-4">
-        <UButton color="gray" variant="soft" icon="i-heroicons-printer" block>Imprimir PDF</UButton>
-        <UButton color="gray" variant="soft" icon="i-heroicons-share" block>Compartilhar</UButton>
+        <UButton
+          color="gray"
+          variant="soft"
+          icon="i-heroicons-printer"
+          block
+        >
+          Imprimir PDF
+        </UButton>
+        <UButton
+          color="gray"
+          variant="soft"
+          icon="i-heroicons-share"
+          block
+        >
+          Compartilhar
+        </UButton>
       </div>
     </div>
   </div>
@@ -138,12 +188,7 @@ const nutrients = [
 
   .group-label {
     display: block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #94a3b8;
-    margin-bottom: 0.75rem;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; margin-bottom: 0.75rem;
   }
 
   .comp-card {

@@ -31,8 +31,12 @@ const selectObjective = (id: string) => {
     <!-- Summary Header -->
     <header class="step-header mb-8">
       <div class="summary-pill mb-4">
-        <span class="label">ANIMAL:</span>
-        <span class="value">{{ state.step1.animalRace }} | {{ state.step1.liveWeight }}kg | CMS: {{ cmsResult.toFixed(1) }}kg</span>
+        <span class="label">
+          ANIMAL:
+        </span>
+        <span class="value">
+          {{ state.step1.animalRace }} | {{ state.step1.liveWeight }}kg | CMS: {{ cmsResult.toFixed(1) }}kg
+        </span>
       </div>
       <h2 class="title">
         Exigências Nutricionais
@@ -45,7 +49,9 @@ const selectObjective = (id: string) => {
     <div class="form-container space-y-8">
       <!-- 1. Objective Grid -->
       <section class="form-group">
-        <label class="group-label">Objetivo da Dieta</label>
+        <label class="group-label">
+          Objetivo da Dieta
+        </label>
         <div class="objective-grid">
           <div
             v-for="obj in objectives"
@@ -58,8 +64,12 @@ const selectObjective = (id: string) => {
               <UIcon :name="obj.icon" />
             </div>
             <div class="card-text">
-              <h3 class="card-title">{{ obj.title }}</h3>
-              <p class="card-desc">{{ obj.description }}</p>
+              <h3 class="card-title">
+                {{ obj.title }}
+              </h3>
+              <p class="card-desc">
+                {{ obj.description }}
+              </p>
             </div>
             <div v-if="state.step2.dietObjective === obj.id" class="check-icon">
               <UIcon name="i-heroicons-check-circle" />
@@ -73,32 +83,48 @@ const selectObjective = (id: string) => {
         <div class="nutritional-controls grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="control-item">
             <div class="control-header">
-              <label class="group-label">Proteína Bruta (PB %)</label>
-              <span class="control-value">{{ state.step2.pb }}%</span>
+              <label class="group-label">
+                Proteína Bruta (PB %)
+              </label>
+              <span class="control-value">
+                {{ state.step2.pb }}%
+              </span>
             </div>
             <URange v-model="state.step2.pb" :min="5" :max="25" color="primary" />
           </div>
 
           <div class="control-item">
             <div class="control-header">
-              <label class="group-label">Energia (NDT %)</label>
-              <span class="control-value">{{ state.step2.ndt }}%</span>
+              <label class="group-label">
+                Energia (NDT %)
+              </label>
+              <span class="control-value">
+                {{ state.step2.ndt }}%
+              </span>
             </div>
             <URange v-model="state.step2.ndt" :min="40" :max="90" color="primary" />
           </div>
 
           <div class="control-item">
             <div class="control-header">
-              <label class="group-label">FDA (%)</label>
-              <span class="control-value">{{ state.step2.fda }}%</span>
+              <label class="group-label">
+                FDA (%)
+              </label>
+              <span class="control-value">
+                {{ state.step2.fda }}%
+              </span>
             </div>
             <UInput v-model="state.step2.fda" type="number" size="lg" class="mt-2" />
           </div>
 
           <div class="control-item">
             <div class="control-header">
-              <label class="group-label">FDN (%)</label>
-              <span class="control-value">{{ state.step2.fdn }}%</span>
+              <label class="group-label">
+                FDN (%)
+              </label>
+              <span class="control-value">
+                {{ state.step2.fdn }}%
+              </span>
             </div>
             <UInput v-model="state.step2.fdn" type="number" size="lg" class="mt-2" />
           </div>
@@ -110,23 +136,43 @@ const selectObjective = (id: string) => {
         <div class="ref-table-card">
           <header class="ref-header">
             <UIcon name="i-heroicons-table-cells" />
-            <span>TABELA DE REFERÊNCIA (NRC)</span>
+            <span>
+              TABELA DE REFERÊNCIA (NRC)
+            </span>
           </header>
           <div class="ref-body">
             <div class="ref-row header">
-              <span>Fase</span>
-              <span>PB %</span>
-              <span>NDT %</span>
+              <span>
+                Fase
+              </span>
+              <span>
+                PB %
+              </span>
+              <span>
+                NDT %
+              </span>
             </div>
             <div class="ref-row">
-              <span>Recria</span>
-              <span>14-16%</span>
-              <span>68-72%</span>
+              <span>
+                Recria
+              </span>
+              <span>
+                14-16%
+              </span>
+              <span>
+                68-72%
+              </span>
             </div>
             <div class="ref-row">
-              <span>Terminação</span>
-              <span>12-14%</span>
-              <span>75-82%</span>
+              <span>
+                Terminação
+              </span>
+              <span>
+                12-14%
+              </span>
+              <span>
+                75-82%
+              </span>
             </div>
           </div>
         </div>

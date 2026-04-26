@@ -54,8 +54,12 @@ const pbBalance = computed(() => {
         </p>
       </div>
       <div class="cost-highlight">
-        <span class="label">CUSTO ESTIMADO</span>
-        <span class="value">R$ {{ totalCost.toFixed(2) }}<small>/dia</small></span>
+        <span class="label">
+          CUSTO ESTIMADO
+        </span>
+        <span class="value">
+          R$ {{ totalCost.toFixed(2) }}<small>/dia</small>
+        </span>
       </div>
     </header>
 
@@ -87,7 +91,9 @@ const pbBalance = computed(() => {
 
       <!-- 2. Ingredient List -->
       <section class="form-group">
-        <label class="group-label">Ingredientes Disponíveis</label>
+        <label class="group-label">
+          Ingredientes Disponíveis
+        </label>
         <div class="ingredient-list space-y-3">
           <div
             v-for="ing in availableIngredients"
@@ -100,11 +106,19 @@ const pbBalance = computed(() => {
               @update:model-value="toggleIngredient(ing)"
             />
             <div class="ing-info">
-              <span class="ing-name">{{ ing.name }}</span>
+              <span class="ing-name">
+                {{ ing.name }}
+              </span>
               <div class="ing-metrics">
-                <span>PB: {{ ing.pb }}%</span>
-                <span>NDT: {{ ing.ndt }}%</span>
-                <span>R$/kg: {{ ing.costPerKg.toFixed(2) }}</span>
+                <span>
+                  PB: {{ ing.pb }}%
+                </span>
+                <span>
+                  NDT: {{ ing.ndt }}%
+                </span>
+                <span>
+                  R$/kg: {{ ing.costPerKg.toFixed(2) }}
+                </span>
               </div>
             </div>
             <div v-if="isSelected(ing.id) && state.step3.balanceMode === 'Manual'" class="ing-amount">
@@ -124,7 +138,9 @@ const pbBalance = computed(() => {
       <section class="balance-summary mt-8">
         <div class="summary-card">
           <header class="card-header">
-            <span class="label">BALANÇO NUTRICIONAL</span>
+            <span class="label">
+              BALANÇO NUTRICIONAL
+            </span>
             <UBadge :color="pbBalance > 90 ? 'green' : 'amber'" variant="subtle">
               {{ pbBalance > 90 ? 'EQUILIBRADO' : 'AJUSTANDO' }}
             </UBadge>

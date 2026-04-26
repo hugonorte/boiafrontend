@@ -169,11 +169,15 @@ watchEffect(() => {
                         <!-- Customização das células usando o padrão #[accessorKey]-cell -->
 
                         <template #nome-cell="{ cell }">
-                            <span class="font-semibold text-slate-900">{{ cell.getValue() }}</span>
+                            <span class="font-semibold text-slate-900">
+                                {{ cell.getValue() }}
+                            </span>
                         </template>
 
                         <template #ms-cell="{ cell }">
-                            <span class="text-slate-600">{{ (cell.getValue() as number ?? 0).toFixed(1) }}%</span>
+                            <span class="text-slate-600">
+                                {{ (cell.getValue() as number ?? 0).toFixed(1) }}%
+                            </span>
                         </template>
 
                         <template #pb-cell="{ cell }">
@@ -183,19 +187,27 @@ watchEffect(() => {
                         </template>
 
                         <template #fdn-cell="{ cell }">
-                            <span class="text-slate-600">{{ (cell.getValue() as number ?? 0).toFixed(1) }}%</span>
+                            <span class="text-slate-600">
+                                {{ (cell.getValue() as number ?? 0).toFixed(1) }}%
+                            </span>
                         </template>
 
                         <template #em-cell="{ cell }">
-                            <span class="text-slate-600">{{ (cell.getValue() as number ?? 0).toFixed(2) }}</span>
+                            <span class="text-slate-600">
+                                {{ (cell.getValue() as number ?? 0).toFixed(2) }}
+                            </span>
                         </template>
 
                         <template #eb-cell="{ cell }">
-                            <span class="text-slate-600">{{ (cell.getValue() as number ?? 0).toFixed(2) }}</span>
+                            <span class="text-slate-600">
+                                {{ (cell.getValue() as number ?? 0).toFixed(2) }}
+                            </span>
                         </template>
 
                         <template #custo-cell="{ cell }">
-                            <span class="font-medium text-primary-600">R$ {{ (cell.getValue() as number ?? 0).toFixed(2) }}</span>
+                            <span class="font-medium text-primary-600">
+                                R$ {{ (cell.getValue() as number ?? 0).toFixed(2) }}
+                            </span>
                         </template>
 
                         <template #empty>
@@ -209,10 +221,14 @@ watchEffect(() => {
 
                     <div class="summary-footer mt-4 flex justify-between items-center">
                         <p class="text-sm text-slate-500">
-                            Total de ingredientes selecionados: <span class="font-bold text-primary">{{ selectedIngredients.length }}</span>
+                            Total de ingredientes selecionados: <span class="font-bold text-primary">
+                                {{ selectedIngredients.length }}
+                            </span>
                         </p>
                         <div class="eb-indicator flex items-center gap-2">
-                            <span class="text-sm font-medium text-slate-500">Energia Bruta Média:</span>
+                            <span class="text-sm font-medium text-slate-500">
+                                Energia Bruta Média:
+                            </span>
                             <UBadge color="primary" variant="solid" size="lg">
                                 {{ state.step4.energiaBrutaMedia.toFixed(4) }} Mcal/kg
                             </UBadge>
@@ -222,34 +238,60 @@ watchEffect(() => {
                     <!-- Nova seção de análise detalhada (Mantença) -->
                     <div v-if="state.step1.dietObjective === 'mantença' && state.step4.cmsReal > 0" class="nutritional-analysis mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="analysis-item p-4 rounded-xl bg-slate-50 border border-slate-100">
-                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Energia Dieta (EM/EB)</span>
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                Energia Dieta (EM/EB)
+                            </span>
                             <div class="flex items-baseline gap-2 mt-1">
-                                <span class="text-xl font-black text-slate-800">{{ state.step4.EMdieta.toFixed(2) }}</span>
-                                <span class="text-sm text-slate-500">EM /</span>
-                                <span class="text-xl font-black text-slate-800">{{ state.step4.EBDieta.toFixed(2) }}</span>
-                                <span class="text-sm text-slate-500">EB</span>
+                                <span class="text-xl font-black text-slate-800">
+                                    {{ state.step4.EMdieta.toFixed(2) }}
+                                </span>
+                                <span class="text-sm text-slate-500">
+                                    EM /
+                                </span>
+                                <span class="text-xl font-black text-slate-800">
+                                    {{ state.step4.EBDieta.toFixed(2) }}
+                                </span>
+                                <span class="text-sm text-slate-500">
+                                    EB
+                                </span>
                             </div>
                         </div>
 
                         <div class="analysis-item p-4 rounded-xl bg-primary-50 border border-primary-100">
-                            <span class="text-xs font-bold text-primary-400 uppercase tracking-wider">Fatores Q & Km</span>
+                            <span class="text-xs font-bold text-primary-400 uppercase tracking-wider">
+                                Fatores Q & Km
+                            </span>
                             <div class="flex items-baseline gap-4 mt-1">
                                 <div>
-                                    <span class="text-xs text-primary-600 font-medium">Q:</span>
-                                    <span class="text-xl font-black text-primary-700 ml-1">{{ state.step4.Q.toFixed(3) }}</span>
+                                    <span class="text-xs text-primary-600 font-medium">
+                                        Q:
+                                    </span>
+                                    <span class="text-xl font-black text-primary-700 ml-1">
+                                        {{ state.step4.Q.toFixed(3) }}
+                                    </span>
                                 </div>
                                 <div>
-                                    <span class="text-xs text-primary-600 font-medium">Km:</span>
-                                    <span class="text-xl font-black text-primary-700 ml-1">{{ state.step4.Km.toFixed(3) }}</span>
+                                    <span class="text-xs text-primary-600 font-medium">
+                                        Km:
+                                    </span>
+                                    <span class="text-xl font-black text-primary-700 ml-1">
+                                        {{ state.step4.Km.toFixed(3) }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="analysis-item p-4 rounded-xl bg-green-600 border border-green-700 text-white">
-                            <span class="text-xs font-bold text-green-200 uppercase tracking-wider">Consumo Real Estimado</span>
+                            <span class="text-xs font-bold text-green-200 uppercase tracking-wider">
+                                Consumo Real Estimado
+                            </span>
                             <div class="flex items-baseline gap-2 mt-1">
-                                <span class="text-2xl font-black">{{ state.step4.cmsReal.toFixed(2) }}</span>
-                                <span class="text-sm text-green-100">Kg MS/dia</span>
+                                <span class="text-2xl font-black">
+                                    {{ state.step4.cmsReal.toFixed(2) }}
+                                </span>
+                                <span class="text-sm text-green-100">
+                                    Kg MS/dia
+                                </span>
                             </div>
                         </div>
                     </div>
