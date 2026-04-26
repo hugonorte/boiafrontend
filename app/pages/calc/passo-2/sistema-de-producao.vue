@@ -4,8 +4,6 @@ definePageMeta({
 })
 
 const { state } = useWizardState()
-
-
 </script>
 
 <template>
@@ -30,6 +28,4 @@ const { state } = useWizardState()
   flex-direction: column;
   gap: 2.5rem;
 }
-
-
 </style>
