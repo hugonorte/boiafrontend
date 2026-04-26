@@ -35,12 +35,12 @@ const hlinks = ref<ButtonProps[]>([
 
 <template>
   <UContainer>
-  <UPageHeader
-  title="BOIA"
-  headline="BETA"
-  :links="hlinks"
-/>
-</UContainer>
+    <UPageHeader
+      title="BOIA"
+      headline="BETA"
+      :links="hlinks"
+    />
+  </UContainer>
   <UContainer class="py-24 sm:py-32">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <!-- Conteúdo de Texto -->
