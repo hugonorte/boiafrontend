@@ -1,16 +1,11 @@
 <template>
   <UApp>
-    <UHeader>
-
-    </UHeader>
+    <UHeader />
 
     <UMain>
       <slot />
     </UMain>
 
-
-    <UFooter>
-
-    </UFooter>
+    <UFooter />
   </UApp>
 </template>

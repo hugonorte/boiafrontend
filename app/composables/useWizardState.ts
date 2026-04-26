@@ -98,7 +98,7 @@ export const useWizardState = () => {
         const hasProteico = selectedCats.some(cat => cat.includes('proteico'))
 
         if (!hasVolumoso || !hasEnergetico || !hasProteico) {
-          let missing = []
+          const missing = []
           if (!hasVolumoso) missing.push('Volumoso')
           if (!hasEnergetico) missing.push('Energético')
           if (!hasProteico) missing.push('Proteico')
