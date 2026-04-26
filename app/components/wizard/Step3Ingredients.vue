@@ -59,16 +59,16 @@ const pbBalance = computed(() => {
       <!-- 1. Balance Mode Toggle -->
       <div class="mode-toggle-card">
         <div class="toggle-group">
-          <button 
-            class="toggle-btn" 
+          <button
+            class="toggle-btn"
             :class="{ active: state.step3.balanceMode === 'Automático' }"
             @click="state.step3.balanceMode = 'Automático'"
           >
             <UIcon name="i-heroicons-cpu-chip" />
             AUTOMÁTICO
           </button>
-          <button 
-            class="toggle-btn" 
+          <button
+            class="toggle-btn"
             :class="{ active: state.step3.balanceMode === 'Manual' }"
             @click="state.step3.balanceMode = 'Manual'"
           >
@@ -85,14 +85,14 @@ const pbBalance = computed(() => {
       <section class="form-group">
         <label class="group-label">Ingredientes Disponíveis</label>
         <div class="ingredient-list space-y-3">
-          <div 
-            v-for="ing in availableIngredients" 
+          <div
+            v-for="ing in availableIngredients"
             :key="ing.id"
             class="ingredient-item"
             :class="{ selected: isSelected(ing.id) }"
           >
-            <UCheckbox 
-              :model-value="isSelected(ing.id)" 
+            <UCheckbox
+              :model-value="isSelected(ing.id)"
               @update:model-value="toggleIngredient(ing)"
             />
             <div class="ing-info">
@@ -104,10 +104,10 @@ const pbBalance = computed(() => {
               </div>
             </div>
             <div v-if="isSelected(ing.id) && state.step3.balanceMode === 'Manual'" class="ing-amount">
-              <UInput 
-                v-model="state.step3.selectedIngredients.find(i => i.id === ing.id)!.amountKg" 
-                type="number" 
-                size="sm" 
+              <UInput
+                v-model="state.step3.selectedIngredients.find(i => i.id === ing.id)!.amountKg"
+                type="number"
+                size="sm"
                 trailing-icon="i-heroicons-scale"
                 class="w-24"
               />
@@ -149,7 +149,7 @@ const pbBalance = computed(() => {
     padding: 0.75rem 1.25rem;
     border-radius: 16px;
     border: 1px solid #e2e8f0;
-    
+
     .label {
       display: block;
       font-size: 0.65rem;
@@ -161,7 +161,7 @@ const pbBalance = computed(() => {
       font-size: 1.25rem;
       font-weight: 900;
       color: #16a34a;
-      
+
       small { font-size: 0.8rem; color: #64748b; }
     }
   }
@@ -170,12 +170,12 @@ const pbBalance = computed(() => {
     background-color: #f1f5f9;
     padding: 1rem;
     border-radius: 16px;
-    
+
     .toggle-group {
       display: flex;
       gap: 0.5rem;
       margin-bottom: 0.75rem;
-      
+
       .toggle-btn {
         flex: 1;
         padding: 0.6rem;
@@ -190,14 +190,14 @@ const pbBalance = computed(() => {
         background-color: #e2e8f0;
         color: #64748b;
         transition: all 0.2s ease;
-        
+
         &.active {
           background-color: #1e293b;
           color: white;
         }
       }
     }
-    
+
     .mode-hint {
       font-size: 0.75rem;
       color: #64748b;
@@ -214,20 +214,20 @@ const pbBalance = computed(() => {
     border: 1px solid #f1f5f9;
     border-radius: 16px;
     transition: all 0.2s ease;
-    
+
     &:hover { border-color: #e2e8f0; }
     &.selected { border-color: #22c55e; background-color: rgba(34, 197, 94, 0.02); }
-    
+
     .ing-info {
       flex: 1;
-      
+
       .ing-name {
         display: block;
         font-weight: 800;
         font-size: 0.9rem;
         color: #1e293b;
       }
-      
+
       .ing-metrics {
         display: flex;
         gap: 1rem;
@@ -242,12 +242,12 @@ const pbBalance = computed(() => {
   .summary-card {
     border-top: 1px dashed #e2e8f0;
     padding-top: 2rem;
-    
+
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      
+
       .label {
         font-size: 0.7rem;
         font-weight: 800;
@@ -255,7 +255,7 @@ const pbBalance = computed(() => {
         letter-spacing: 0.05em;
       }
     }
-    
+
     .bar-info {
       display: flex;
       justify-content: space-between;

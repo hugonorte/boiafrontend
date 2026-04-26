@@ -1,7 +1,7 @@
 <template>
-    <UApp>
+  <UApp>
     <UHeader>
-      
+
     </UHeader>
 
     <UMain>
@@ -10,7 +10,7 @@
 
 
     <UFooter>
-      
+
     </UFooter>
   </UApp>
 </template>

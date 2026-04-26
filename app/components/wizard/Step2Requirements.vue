@@ -15,8 +15,8 @@ const objectives = [
 ]
 
 const cmsResult = computed(() => {
-  const percentage = state.value.step1.cmsPercentage === 0 
-    ? (state.value.step1.cmsCustomValue || 0) 
+  const percentage = state.value.step1.cmsPercentage === 0
+    ? (state.value.step1.cmsCustomValue || 0)
     : state.value.step1.cmsPercentage
   return calculateCMS(state.value.step1.liveWeight, percentage)
 })
@@ -43,8 +43,8 @@ const selectObjective = (id: string) => {
       <section class="form-group">
         <label class="group-label">Objetivo da Dieta</label>
         <div class="objective-grid">
-          <div 
-            v-for="obj in objectives" 
+          <div
+            v-for="obj in objectives"
             :key="obj.id"
             class="objective-card"
             :class="{ active: state.step2.dietObjective === obj.id }"
@@ -135,7 +135,7 @@ const selectObjective = (id: string) => {
     border-radius: 99px;
     font-size: 0.75rem;
     font-weight: 700;
-    
+
     .label { color: #64748b; }
     .value { color: #1e293b; }
   }
@@ -181,22 +181,22 @@ const selectObjective = (id: string) => {
       align-items: center;
       position: relative;
       transition: all 0.2s ease;
-      
+
       &:hover {
         border-color: #e2e8f0;
         background-color: #f8fafc;
       }
-      
+
       &.active {
         border-color: #22c55e;
         background-color: rgba(34, 197, 94, 0.05);
-        
+
         .card-icon {
           background-color: #22c55e;
           color: white;
         }
       }
-      
+
       .card-icon {
         width: 48px;
         height: 48px;
@@ -209,19 +209,19 @@ const selectObjective = (id: string) => {
         color: #64748b;
         flex-shrink: 0;
       }
-      
+
       .card-title {
         font-weight: 800;
         font-size: 0.9rem;
         color: #1e293b;
       }
-      
+
       .card-desc {
         font-size: 0.75rem;
         color: #64748b;
         margin-top: 0.15rem;
       }
-      
+
       .check-icon {
         position: absolute;
         top: 1rem;
@@ -238,7 +238,7 @@ const selectObjective = (id: string) => {
       justify-content: space-between;
       align-items: center;
       margin-bottom: 0.5rem;
-      
+
       .control-value {
         font-weight: 900;
         color: #16a34a;
@@ -252,7 +252,7 @@ const selectObjective = (id: string) => {
     border-radius: 16px;
     padding: 1rem;
     border: 1px solid #e2e8f0;
-    
+
     .ref-header {
       display: flex;
       align-items: center;
@@ -263,7 +263,7 @@ const selectObjective = (id: string) => {
       margin-bottom: 1rem;
       letter-spacing: 0.05em;
     }
-    
+
     .ref-body {
       .ref-row {
         display: grid;
@@ -271,16 +271,16 @@ const selectObjective = (id: string) => {
         padding: 0.5rem 0;
         font-size: 0.8rem;
         border-bottom: 1px solid #f1f5f9;
-        
+
         &:last-child { border-bottom: none; }
-        
+
         &.header {
           font-weight: 700;
           color: #94a3b8;
           text-transform: uppercase;
           font-size: 0.65rem;
         }
-        
+
         span { color: #334155; }
       }
     }

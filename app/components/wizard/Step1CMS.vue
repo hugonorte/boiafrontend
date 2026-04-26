@@ -3,7 +3,7 @@ const { state } = useWizardState()
 const { calculateCMS, getCMSStatus } = useCalculations()
 
 const races = [
-  'Nelore', 'Angus', 'Braford', 'Charolês', 'Simental', 
+  'Nelore', 'Angus', 'Braford', 'Charolês', 'Simental',
   'Guzerá', 'Tabapuã', 'Canchim', 'Pantaneiro', 'Crioulo', 'Outra'
 ]
 
@@ -15,15 +15,15 @@ const cmsOptions = [
 ]
 
 const cmsResult = computed(() => {
-  const percentage = state.value.step1.cmsPercentage === 0 
-    ? (state.value.step1.cmsCustomValue || 0) 
+  const percentage = state.value.step1.cmsPercentage === 0
+    ? (state.value.step1.cmsCustomValue || 0)
     : state.value.step1.cmsPercentage
   return calculateCMS(state.value.step1.liveWeight, percentage)
 })
 
 const cmsStatus = computed(() => {
-  const percentage = state.value.step1.cmsPercentage === 0 
-    ? (state.value.step1.cmsCustomValue || 0) 
+  const percentage = state.value.step1.cmsPercentage === 0
+    ? (state.value.step1.cmsCustomValue || 0)
     : state.value.step1.cmsPercentage
   return getCMSStatus(percentage)
 })
@@ -50,13 +50,13 @@ const cmsStatus = computed(() => {
 
         <UFormField label="% do Peso Vivo (CMS)" name="cms">
           <URadioGroup v-model="state.step1.cmsPercentage" :options="cmsOptions" />
-          
+
           <div v-if="state.step1.cmsPercentage === 0" class="mt-2">
-            <UInput 
-              v-model="state.step1.cmsCustomValue" 
-              type="number" 
-              step="0.1" 
-              placeholder="Informe o valor (1% a 3%)" 
+            <UInput
+              v-model="state.step1.cmsCustomValue"
+              type="number"
+              step="0.1"
+              placeholder="Informe o valor (1% a 3%)"
               help="Valor típico: 2% a 2,5%"
             />
           </div>
@@ -70,7 +70,7 @@ const cmsStatus = computed(() => {
             {{ cmsStatus.label }}
           </UBadge>
         </div>
-        
+
         <UCard class="mt-4 bg-blue-50 border-blue-100">
           <p class="text-sm text-blue-700">
             O consumo de matéria seca representa a quantidade de alimento que o animal ingere diariamente, desconsiderando a água.
@@ -83,19 +83,19 @@ const cmsStatus = computed(() => {
 
 <style lang="scss">
 .premium-card {
-    border-radius: 24px;
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    
-    .text-gray-900 {
-        color: #1e293b;
-    }
+  border-radius: 24px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+
+  .text-gray-900 {
+    color: #1e293b;
+  }
 }
 
 .step-content {
-    max-width: 600px;
-    margin: 0 auto;
+  max-width: 600px;
+  margin: 0 auto;
 }
 </style>
