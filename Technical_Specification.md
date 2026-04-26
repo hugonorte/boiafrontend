@@ -243,7 +243,6 @@ Esta tela apresenta um resumo detalhado de todos os ingredientes selecionados no
 O projeto utiliza Cypress para garantir a integridade dos fluxos críticos.
 - **Suite Validada:** `cypress/e2e/passo-1.cy.ts`
 - **Cobertura:** Validação de inputs numéricos, seleção de cards agro-premium e navegação entre etapas.
-- **CI/CD Robustness:** O build automatizado em ambiente de integração contínua não deve falhar devido a erros de linting ou formatação de código. O foco deve ser a funcionalidade e estabilidade do sistema.
 - **Padrão de Seletores:** Priorizar seletores resilientes baseados em labels e no atributo `[data-slot="root"]` do Nuxt UI v4 para evitar quebras por alterações estruturais do framework.
 
 ### Metodologia de Desenvolvimento

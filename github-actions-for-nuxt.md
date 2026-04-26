@@ -8,7 +8,6 @@ O objetivo deste pipeline é automatizar os processos de:
 2. Deploys to a Hostinger server via `rsync` **only** after a Pull Request is merged into `master` or via a manual trigger.
 3. Uses separate jobs for `build` and `deploy` to handle permissions and separation of concerns.
 4. **Implements an automatic retry mechanism** to handle transient network failures with the server.
-5. **CI/CD Build Robustness**: The build process must not fail due to code formatting or linting errors. Formatting checks should be treated as non-blocking.
 
 ## Git Flow Strategy
 Este projeto segue um modelo de ramificação inspirado no Git Flow:
