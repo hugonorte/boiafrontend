@@ -111,7 +111,7 @@ const nutrients = [
     padding: 0.75rem 1.25rem;
     border-radius: 16px;
     color: white;
-    
+
     .label {
       display: block;
       font-size: 0.65rem;
@@ -123,7 +123,7 @@ const nutrients = [
       font-size: 1.5rem;
       font-weight: 900;
       color: #22c55e;
-      
+
       small { font-size: 0.8rem; color: #94a3b8; font-weight: 500; }
     }
   }
@@ -146,14 +146,14 @@ const nutrients = [
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+
     .name { font-weight: 800; font-size: 0.85rem; color: #1e293b; display: block; }
     .mn-val { font-size: 0.7rem; color: #64748b; font-weight: 600; }
-    
+
     .comp-percentage {
       text-align: right;
       width: 80px;
-      
+
       .val { font-weight: 900; font-size: 1rem; color: #16a34a; }
       .mini-bar {
         height: 4px;
@@ -170,7 +170,7 @@ const nutrients = [
     border: 1px solid #e2e8f0;
     border-radius: 16px;
     overflow: hidden;
-    
+
     .table-header {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr 0.5fr;
@@ -181,7 +181,7 @@ const nutrients = [
       color: #64748b;
       text-transform: uppercase;
     }
-    
+
     .table-row {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr 0.5fr;
@@ -189,9 +189,9 @@ const nutrients = [
       border-bottom: 1px solid #f1f5f9;
       font-size: 0.85rem;
       align-items: center;
-      
+
       &:last-child { border-bottom: none; }
-      
+
       .nut-name { font-weight: 700; color: #334155; }
       .nut-goal { color: #64748b; }
       .nut-actual { font-weight: 800; }
@@ -203,7 +203,7 @@ const nutrients = [
     border: 1px solid #fef3c7;
     border-radius: 20px;
     padding: 1.5rem;
-    
+
     .card-header {
       display: flex;
       align-items: center;
@@ -213,7 +213,7 @@ const nutrients = [
       color: #92400e;
       letter-spacing: 0.05em;
     }
-    
+
     .insight-item {
       display: flex;
       gap: 0.75rem;
@@ -221,7 +221,7 @@ const nutrients = [
       color: #92400e;
       font-weight: 500;
       line-height: 1.4;
-      
+
       .icon { margin-top: 0.15rem; flex-shrink: 0; }
     }
   }

@@ -33,7 +33,7 @@ const activityLevels = [
     label: 'Baixo',
     value: 'baixo',
     icon: 'i-heroicons-bolt-slash',
-    description: 'Animais confinados ou com deslocamento mínimo.'
+    description: 'Animais confinados or com deslocamento mínimo.'
   },
   {
     label: 'Médio',
