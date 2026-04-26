@@ -53,7 +53,7 @@ const handlePrev = () => {
 }
 
 const handleNext = () => {
-    logState() // Debug: Loga o estado a cada tentativa de avanço
+    logState('next_step') // Debug: Loga o estado a cada tentativa de avanço
     const isValid = validateStep(current.value + 1)
     if (isValid && current.value < items.length - 1) {
         current.value++

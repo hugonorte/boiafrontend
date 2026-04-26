@@ -2,14 +2,14 @@ import { ref } from 'vue'
 
 export interface Ingredient {
   id: number
-  nome: string
-  categoria: string
-  ms: number
-  pb: number
-  fdn: number
-  em: number
-  eb: number
-  custo: number
+  name: string
+  category: string
+  dm: number
+  cp: number
+  ndf: number
+  me: number
+  ge: number
+  cost: number
   amountKg?: number
 }
 
@@ -24,8 +24,8 @@ const globalState = ref({
     cmsCustomValue: null as number | null,
     isCustomCMS: false,
     initialCMSEstimate: 0,
-    pesoMetabolico: 0,
-    EnergiaLiquidaMantenca: 0,
+    metabolicWeight: 0,
+    netEnergyMaintenance: 0,
     sex: '',
     age: 0,
     pregnancyDays: undefined as number | undefined,
@@ -42,13 +42,13 @@ const globalState = ref({
     dailyCost: 0
   },
   step4: {
-    energiaBrutaMedia: 0,
-    EMdieta: 0,
-    EBDieta: 0,
-    Q: 0,
-    Km: 0,
-    EMm: 0,
-    cmsReal: 0,
+    averageGrossEnergy: 0,
+    metabolizableEnergyDiet: 0,
+    grossEnergyDiet: 0,
+    q: 0,
+    km: 0,
+    metabolizableEnergyMaintenance: 0,
+    actualDMIntake: 0,
     recommendations: [] as string[]
   }
 })
@@ -90,9 +90,9 @@ export const useWizardState = () => {
     } else if (stepNumber === 3) {
       if (!state.value.step3.selectedIngredients || state.value.step3.selectedIngredients.length === 0) {
         validationErrors.value.selectedIngredients = 'Selecione pelo menos um ingrediente'
-      } else if (state.value.step1.dietObjective === 'Mantença') {
+      } else if (state.value.step1.dietObjective === 'mantença') {
         // Validação específica para Mantença: Necessário Volumoso, Energético e Proteico
-        const selectedCats = state.value.step3.selectedIngredients.map(i => i.categoria.toLowerCase())
+        const selectedCats = state.value.step3.selectedIngredients.map(i => i.category.toLowerCase())
         const hasVolumoso = selectedCats.some(cat => cat.includes('volumoso'))
         const hasEnergetico = selectedCats.some(cat => cat.includes('energético'))
         const hasProteico = selectedCats.some(cat => cat.includes('proteico'))

@@ -23,8 +23,8 @@ const handleWeightInput = (val: string | number) => {
   const num = Number(val)
   state.value.step1.liveWeight = num
   if (num > 0) {
-    state.value.step1.pesoMetabolico = Math.pow(num, 0.75)
-    state.value.step1.EnergiaLiquidaMantenca = state.value.step1.pesoMetabolico * 0.077
+    state.value.step1.metabolicWeight = Math.pow(num, 0.75)
+    state.value.step1.netEnergyMaintenance = state.value.step1.metabolicWeight * 0.077
   }
 }
 </script>
