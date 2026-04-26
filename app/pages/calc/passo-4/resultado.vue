@@ -146,7 +146,7 @@ watchEffect(() => {
     <ClientOnly>
       <div class="step-header">
         <h2 class="step-title">
-          Resumo da Seleção...
+          Resumo da Seleção..
         </h2>
         <p class="step-description">
           Confira abaixo os ingredientes selecionados e seus respectivos valores nutricionais.
