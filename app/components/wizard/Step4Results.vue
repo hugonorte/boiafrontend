@@ -4,8 +4,6 @@
  * High-fidelity replication from Stitch Design
  */
 
-const { state } = useWizardState()
-
 const results = [
   { name: 'Milho Grão', percentage: 45, mn: 4.5 },
   { name: 'Farelo de Soja', percentage: 15, mn: 1.5 },
@@ -188,7 +186,12 @@ const nutrients = [
 
   .group-label {
     display: block;
-    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; margin-bottom: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    margin-bottom: 0.75rem;
   }
 
   .comp-card {

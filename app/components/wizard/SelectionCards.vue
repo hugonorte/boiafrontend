@@ -6,7 +6,7 @@ interface Item {
   icon?: string
 }
 
-const props = defineProps<{
+defineProps<{
   items: Item[]
   modelValue: string
 }>()

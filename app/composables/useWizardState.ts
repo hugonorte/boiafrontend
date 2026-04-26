@@ -33,7 +33,7 @@ const globalState = ref({
   },
   step2: {
     productionSystem: '',
-    activityLevel: '',
+    activityLevel: ''
   },
   step3: {
     balanceMode: '',
@@ -54,7 +54,7 @@ const globalState = ref({
 })
 
 // Erros de validação globais para que layout e páginas compartilhem o mesmo estado
-const globalValidationErrors = ref<Record<string, any>>({})
+const globalValidationErrors = ref<Record<string, string>>({})
 
 export const useWizardState = () => {
   const state = globalState
@@ -79,17 +79,17 @@ export const useWizardState = () => {
   const validateStep = (stepNumber: number) => {
     validationErrors.value = {}
     if (stepNumber === 1) {
-      if (!state.value.step1.animalRace) validationErrors.value.animalRace = "Obrigatório"
-      if (!state.value.step1.sex) validationErrors.value.sex = "Obrigatório"
-      if (!state.value.step1.age) validationErrors.value.age = "Obrigatório"
-      if (!state.value.step1.liveWeight || state.value.step1.liveWeight <= 0) validationErrors.value.liveWeight = "Obrigatório"
-      if (!state.value.step1.dietObjective) validationErrors.value.dietObjective = "Obrigatório"
+      if (!state.value.step1.animalRace) validationErrors.value.animalRace = 'Obrigatório'
+      if (!state.value.step1.sex) validationErrors.value.sex = 'Obrigatório'
+      if (!state.value.step1.age) validationErrors.value.age = 'Obrigatório'
+      if (!state.value.step1.liveWeight || state.value.step1.liveWeight <= 0) validationErrors.value.liveWeight = 'Obrigatório'
+      if (!state.value.step1.dietObjective) validationErrors.value.dietObjective = 'Obrigatório'
     } else if (stepNumber === 2) {
-      if (!state.value.step2.productionSystem) validationErrors.value.productionSystem = "Obrigatório"
-      if (!state.value.step2.activityLevel) validationErrors.value.activityLevel = "Obrigatório"
+      if (!state.value.step2.productionSystem) validationErrors.value.productionSystem = 'Obrigatório'
+      if (!state.value.step2.activityLevel) validationErrors.value.activityLevel = 'Obrigatório'
     } else if (stepNumber === 3) {
       if (!state.value.step3.selectedIngredients || state.value.step3.selectedIngredients.length === 0) {
-        validationErrors.value.selectedIngredients = "Selecione pelo menos um ingrediente"
+        validationErrors.value.selectedIngredients = 'Selecione pelo menos um ingrediente'
       } else if (state.value.step1.dietObjective === 'Mantença') {
         // Validação específica para Mantença: Necessário Volumoso, Energético e Proteico
         const selectedCats = state.value.step3.selectedIngredients.map(i => i.categoria.toLowerCase())

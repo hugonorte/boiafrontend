@@ -47,7 +47,12 @@ const handleCustomInput = () => {
 
 <template>
   <div class="cms-selector-component">
-    <label v-if="label" class="group-label">{{ label }}</label>
+    <label
+      v-if="label"
+      class="group-label"
+    >
+      {{ label }}
+    </label>
     <div class="segmented-control">
       <button
         v-for="preset in cmsPresets"
@@ -63,12 +68,18 @@ const handleCustomInput = () => {
         :class="{ active: state.step1.isCustomCMS }"
         @click="state.step1.isCustomCMS = !state.step1.isCustomCMS"
       >
-        <UIcon name="i-heroicons-pencil-square" class="mr-1" />
+        <UIcon
+          name="i-heroicons-pencil-square"
+          class="mr-1"
+        />
         PERSONALIZADO
       </button>
     </div>
 
-    <div v-if="state.step1.isCustomCMS" class="custom-input-wrapper mt-4">
+    <div
+      v-if="state.step1.isCustomCMS"
+      class="custom-input-wrapper mt-4"
+    >
       <UInput
         v-model="state.step1.cmsCustomValue"
         type="number"
@@ -86,12 +97,25 @@ const handleCustomInput = () => {
             Consumo Estimado
           </p>
           <p class="text-3xl font-black text-primary-600">
-            {{ state.step1.initialCMSEstimate.toFixed(2) }} <span class="text-lg">kg/dia</span>
+            {{ state.step1.initialCMSEstimate.toFixed(2) }}
+            <span class="text-lg">
+              kg/dia
+            </span>
           </p>
-          <UBadge color="primary" variant="subtle" class="mt-2 font-bold">
+          <UBadge
+            color="primary"
+            variant="subtle"
+            class="mt-2 font-bold"
+          >
             {{ ((state.step1.initialCMSEstimate / props.pesoVivo) * 100).toFixed(1) }}% do Peso Vivo
           </UBadge>
-          <UAlert icon="i-lucide-info" color="neutral" variant="subtle" class="mt-4" description="O consumo de matéria seca representa a quantidade de alimento que o animal ingere diariamente, desconsiderando a água." />
+          <UAlert
+            icon="i-lucide-info"
+            color="neutral"
+            variant="subtle"
+            class="mt-4"
+            description="O consumo de matéria seca representa a quantidade de alimento que o animal ingere diariamente, desconsiderando a água."
+          />
         </div>
       </template>
       <template v-else>
