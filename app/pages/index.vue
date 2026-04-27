@@ -15,12 +15,6 @@ const items = [
     icon: 'i-heroicons-calculator',
     to: '/calc/passo-1/dados-do-animal'
   },
-  {
-    label: 'Site Oficial',
-    icon: 'i-heroicons-globe-alt',
-    to: 'https://boia.app.br',
-    target: '_blank'
-  }
 ]
 
 const links = [
@@ -31,14 +25,14 @@ const links = [
     size: 'xl' as const,
     icon: 'i-heroicons-calculator'
   },
-  {
-    label: 'Saiba mais',
-    to: 'https://boia.app.br',
-    color: 'neutral' as const,
-    variant: 'ghost' as const,
-    size: 'xl' as const,
-    trailingIcon: 'i-heroicons-arrow-right'
-  }
+  // {
+  //   label: 'Saiba mais',
+  //   to: 'https://boia.app.br',
+  //   color: 'neutral' as const,
+  //   variant: 'ghost' as const,
+  //   size: 'xl' as const,
+  //   trailingIcon: 'i-heroicons-arrow-right'
+  // }
 ]
 </script>
 
