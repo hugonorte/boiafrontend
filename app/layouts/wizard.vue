@@ -2,6 +2,7 @@
 import type { StepperItem } from '@nuxt/ui'
 
 const route = useRoute()
+const colorMode = useColorMode()
 
 const items = [
     {
@@ -62,15 +63,22 @@ const handleNext = () => {
 </script>
 
 <template>
-    <div class="wizard-layout-agro min-h-screen bg-slate-950 p-4 md:p-10">
+    <div class="wizard-layout-agro min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+        <header class="py-4 border-b border-slate-200/50 dark:border-slate-800/50 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm mb-6">
+            <UContainer class="flex items-center justify-between">
+                <Logo :theme="colorMode.value" width="120px" />
+                <UColorModeButton />
+            </UContainer>
+        </header>
+
         <UContainer>
             <UStepper v-model="current" :items="items" class="mb-8" />
 
-            <UCard class="bg-white/95 backdrop-blur shadow-2xl rounded-3xl overflow-hidden border border-white/20">
+            <UCard class="bg-white/95 dark:bg-slate-900/95 backdrop-blur shadow-2xl rounded-3xl overflow-hidden border border-white/20 dark:border-slate-800/20">
                 <template #header>
                     <div class="p-2">
-                        <h1 class="text-2xl font-black text-slate-800 uppercase">{{ items[current]?.title }}</h1>
-                        <p class="text-slate-500">{{ items[current]?.description }}</p>
+                        <h1 class="text-2xl font-black text-slate-800 dark:text-white uppercase transition-colors">{{ items[current]?.title }}</h1>
+                        <p class="text-slate-500 dark:text-slate-400 transition-colors">{{ items[current]?.description }}</p>
                     </div>
                 </template>
 

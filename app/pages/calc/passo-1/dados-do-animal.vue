@@ -32,7 +32,7 @@ const handleWeightInput = (val: string | number) => {
 <template>
   <div class="container flex flex-col gap-6 p-4">
     <UFormField label="Raça do animal" :error="validationErrors.animalRace">
-      <select v-model="state.step1.animalRace" id="input-race" class="w-full p-2 border rounded bg-white text-slate-900 border-slate-300">
+      <select v-model="state.step1.animalRace" id="input-race" class="w-full p-2 border rounded bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 transition-colors">
         <option value="">Selecione a raça</option>
         <option v-for="r in racas" :key="r" :value="r">{{ r }}</option>
       </select>
@@ -40,7 +40,7 @@ const handleWeightInput = (val: string | number) => {
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <UFormField label="Sexo" :error="validationErrors.sex">
-        <select v-model="state.step1.sex" id="input-sex" class="w-full p-2 border rounded bg-white text-slate-900 border-slate-300">
+        <select v-model="state.step1.sex" id="input-sex" class="w-full p-2 border rounded bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 transition-colors">
           <option value="">Selecione</option>
           <option value="macho">Macho</option>
           <option value="fêmea">Fêmea</option>
@@ -59,14 +59,14 @@ const handleWeightInput = (val: string | number) => {
     <UFormField label="Objetivo da Dieta" :error="validationErrors.dietObjective">
       <div class="objective-grid grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div v-for="obj in dietObjectives" :key="obj.value"
-             :class="['p-4 border-2 rounded-xl cursor-pointer transition-all', state.step1.dietObjective === obj.value ? 'border-primary-500 bg-primary-50' : 'border-slate-200 hover:border-slate-300 bg-white']"
+             :class="['p-4 border-2 rounded-xl cursor-pointer transition-all', state.step1.dietObjective === obj.value ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20' : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-800']"
              @click="state.step1.dietObjective = obj.value"
              :id="`objective-${obj.value}`">
           <div class="flex items-center gap-3">
-            <UIcon :name="obj.icon" class="text-2xl text-primary-600" />
+            <UIcon :name="obj.icon" class="text-2xl text-primary-600 dark:text-primary-400" />
             <div>
-              <p class="font-bold text-slate-900">{{ obj.label }}</p>
-              <p class="text-xs text-slate-500">{{ obj.description }}</p>
+              <p class="font-bold text-slate-900 dark:text-white">{{ obj.label }}</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">{{ obj.description }}</p>
             </div>
           </div>
         </div>

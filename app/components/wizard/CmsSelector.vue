@@ -90,9 +90,9 @@ const handleCustomInput = () => {
       />
     </div>
 
-    <div class="mt-4 p-4 bg-gray-50 rounded-lg text-center border-2 border-dashed border-gray-200">
+    <div class="mt-4 p-4 bg-slate-50 dark:bg-slate-900 rounded-lg text-center border-2 border-dashed border-slate-200 dark:border-slate-800 transition-colors">
       <template v-if="props.pesoVivo > 0 && state.step1.initialCMSEstimate > 0">
-        <div class="text-slate-800">
+        <div class="text-slate-800 dark:text-white">
           <p class="text-sm text-slate-500 uppercase font-bold tracking-wider mb-1">
             Consumo Estimado
           </p>
@@ -142,6 +142,7 @@ const handleCustomInput = () => {
   .segmented-control {
     display: flex;
     background-color: #f1f5f9;
+    @apply dark:bg-slate-800 transition-colors;
     padding: 0.25rem;
     border-radius: 12px;
     gap: 0.25rem;
@@ -163,6 +164,7 @@ const handleCustomInput = () => {
 
       &.active {
         background-color: white;
+        @apply dark:bg-slate-700 dark:text-white;
         color: #075a26;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       }

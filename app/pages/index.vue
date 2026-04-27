@@ -1,9 +1,27 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui'
+import type { NavigationMenuItem } from '@nuxt/ui'
 /**
  * BOIA APP - Landing Page
  * Using standard Nuxt UI v3/v4 components
  */
+
+const route = useRoute()
+const colorMode = useColorMode()
+
+const items = [
+  {
+    label: 'Calculadora',
+    icon: 'i-heroicons-calculator',
+    to: '/calc/passo-1/dados-do-animal'
+  },
+  {
+    label: 'Site Oficial',
+    icon: 'i-heroicons-globe-alt',
+    to: 'https://boia.app.br',
+    target: '_blank'
+  }
+]
 
 const links = [
   {
@@ -11,7 +29,7 @@ const links = [
     to: '/calc/passo-1/dados-do-animal',
     color: 'primary' as const,
     size: 'xl' as const,
-    icon: 'i-heroicons-rocket-launch'
+    icon: 'i-heroicons-calculator'
   },
   {
     label: 'Saiba mais',
@@ -22,33 +40,43 @@ const links = [
     trailingIcon: 'i-heroicons-arrow-right'
   }
 ]
-
-const hlinks = ref<ButtonProps[]>([
-  {
-    label: 'GitHub',
-    icon: 'i-simple-icons-github',
-    to: 'https://github.com/hugonorte/boiafrontend',
-    target: '_blank'
-  }
-])
 </script>
 
 <template>
-  <UContainer>
-    <UPageHeader
-      title="BOIA"
-      headline="BETA"
-      :links="hlinks"
-    />
-  </UContainer>
-  <UContainer class="py-24 sm:py-32">
+   <UHeader>
+    <template #title>
+      <Logo :theme="colorMode.value"/>  
+    </template>
+
+    <UNavigationMenu :items="items" />
+
+    <template #right>
+      <UColorModeButton />
+
+      <UTooltip text="Open on GitHub" :kbds="['meta', 'G']">
+        <UButton
+          color="neutral"
+          variant="ghost"
+          to="https://github.com/hugonorte/boiafrontend"
+          target="_blank"
+          icon="i-simple-icons-github"
+          aria-label="GitHub"
+        />
+      </UTooltip>
+    </template>
+
+    <template #body>
+      <UNavigationMenu :items="items" orientation="vertical" class="-mx-2.5" />
+    </template>
+  </UHeader>
+  <UContainer class="py-12 sm:py-32">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <!-- Conteúdo de Texto -->
       <div class="text-left">
-        <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl mb-6">
-          Nutrição Animal de <span class="text-primary-600">Alta Precisão</span>
+        <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-6xl mb-6">
+          Nutrição Animal de <span class="text-primary-600 dark:text-primary-400">Alta Precisão</span>
         </h1>
-        <p class="text-lg text-slate-600 mb-10 leading-relaxed">
+        <p class="text-lg text-slate-600 dark:text-slate-300 mb-10 leading-relaxed">
           O BOIA APP utiliza inteligência e algoritmos avançados para calcular a dieta ideal para o seu rebanho, maximizando resultados e reduzindo custos operacionais.
         </p>
         <div class="flex flex-wrap gap-4">
@@ -63,13 +91,13 @@ const hlinks = ref<ButtonProps[]>([
 
       <!-- Ilustração/Imagem -->
       <div class="relative">
-        <div class="absolute -inset-4 bg-primary-100 rounded-3xl blur-2xl opacity-30 animate-pulse"></div>
+        <div class="absolute -inset-4 bg-primary-100 dark:bg-primary-900/20 rounded-3xl blur-2xl opacity-30 animate-pulse"></div>
         <img
           src="/img/hero.avif"
           width="800"
           height="600"
           alt="Ilustração BOIA APP"
-          class="relative w-full rounded-2xl shadow-2xl border border-slate-200"
+          class="relative w-full rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800"
           loading="lazy"
         />
       </div>
