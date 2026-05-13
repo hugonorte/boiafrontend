@@ -51,22 +51,22 @@ const activityLevels = [
 </script>
 
 <template>
-  <div class="flex flex-col gap-10">
+  <div class="systems-activity-wrapper">
     <UFormField label="Sistema de Produção" :error="validationErrors.productionSystem">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="selection-grid">
         <div
           v-for="sys in systems" :key="sys.value"
-          :class="['p-4 border-2 rounded-xl cursor-pointer transition-all', state.step2.productionSystem === sys.value ? 'border-primary-500 bg-primary-50' : 'border-slate-200 hover:border-slate-300 bg-white']"
+          :class="['selection-card', state.step2.productionSystem === sys.value ? 'active' : '']"
           :id="`production-system-${sys.value}`"
           @click="state.step2.productionSystem = sys.value"
         >
-          <div class="flex items-center gap-3">
-            <UIcon :name="sys.icon" class="text-2xl text-primary-600" />
-            <div>
-              <p class="font-bold text-slate-900">
+          <div class="card-content">
+            <UIcon :name="sys.icon" class="card-icon" />
+            <div class="card-text">
+              <p class="title">
                 {{ sys.label }}
               </p>
-              <p class="text-xs text-slate-500">
+              <p class="description">
                 {{ sys.description }}
               </p>
             </div>
@@ -76,20 +76,20 @@ const activityLevels = [
     </UFormField>
 
     <UFormField label="Nível de Atividade" :error="validationErrors.activityLevel">
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="selection-grid activity-grid">
         <div
           v-for="act in activityLevels" :key="act.value"
-          :class="['p-4 border-2 rounded-xl cursor-pointer transition-all', state.step2.activityLevel === act.value ? 'border-primary-500 bg-primary-50' : 'border-slate-200 hover:border-slate-300 bg-white']"
+          :class="['selection-card activity-card', state.step2.activityLevel === act.value ? 'active' : '']"
           :id="`activity-level-${act.value}`"
           @click="state.step2.activityLevel = act.value"
         >
-          <div class="flex flex-col items-center text-center gap-2">
-            <UIcon :name="act.icon" class="text-3xl text-primary-600" />
-            <div>
-              <p class="font-bold text-slate-900">
+          <div class="card-content vertical">
+            <UIcon :name="act.icon" class="card-icon large" />
+            <div class="card-text center">
+              <p class="title">
                 {{ act.label }}
               </p>
-              <p class="text-[10px] leading-tight text-slate-500 mt-1">
+              <p class="description small">
                 {{ act.description }}
               </p>
             </div>
@@ -101,13 +101,111 @@ const activityLevels = [
 </template>
 
 <style lang="scss" scoped>
+.systems-activity-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.selection-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &.activity-grid {
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+.selection-card {
+  padding: 1rem;
+  border: 2px solid var(--ui-border-accent, #e2e8f0);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: white;
+
+  .dark & {
+    background-color: #1e293b;
+    border-color: #334155;
+  }
+
+  &:hover {
+    border-color: var(--ui-primary, #10b981);
+    transform: translateY(-2px);
+  }
+
+  &.active {
+    border-color: var(--ui-primary, #10b981);
+    background-color: rgba(var(--ui-primary-rgb, 16, 185, 129), 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  &.vertical {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.card-icon {
+  font-size: 1.5rem;
+  color: var(--ui-primary, #10b981);
+
+  &.large {
+    font-size: 2rem;
+  }
+}
+
+.card-text {
+  .title {
+    font-weight: 800;
+    color: #1e293b;
+    
+    .dark & {
+      color: white;
+    }
+  }
+
+  .description {
+    font-size: 0.75rem;
+    color: #64748b;
+
+    &.small {
+      font-size: 0.625rem;
+      line-height: 1.2;
+    }
+  }
+
+  &.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 :deep(label) {
-  color: rgb(7, 52, 17);
-  font-weight: 700;
+  color: #064e3b;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   display: block;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
+
+  .dark & {
+    color: #34d399;
+  }
 }
 </style>

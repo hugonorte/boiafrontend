@@ -18,15 +18,17 @@ const dietObjectives = [
   { label: 'Lactação', value: 'lactação', icon: 'i-heroicons-beaker', description: 'Baseado na produção diária e gordura do leite.' }
 ]
 
-// Usando inputs simples para garantir compatibilidade total com Cypress
-const handleWeightInput = (val: string | number) => {
-  const num = Number(val)
-  state.value.step1.liveWeight = num
-  if (num > 0) {
-    state.value.step1.metabolicWeight = Math.pow(num, 0.75)
+// Watcher para cálculos derivados do peso vivo
+watch(() => state.value.step1.liveWeight, (newWeight) => {
+  if (newWeight > 0) {
+    state.value.step1.metabolicWeight = Math.pow(newWeight, 0.75)
     state.value.step1.netEnergyMaintenance = state.value.step1.metabolicWeight * 0.077
+  } else {
+    state.value.step1.metabolicWeight = 0
+    state.value.step1.netEnergyMaintenance = 0
+    state.value.step1.initialCMSEstimate = 0
   }
-}
+})
 </script>
 
 <template>
@@ -52,7 +54,13 @@ const handleWeightInput = (val: string | number) => {
       </UFormField>
 
       <UFormField label="Peso vivo (kg)" :error="validationErrors.liveWeight">
-        <UInput type="number" :model-value="state.step1.liveWeight" @update:model-value="handleWeightInput" placeholder="Ex: 450" id="input-weight" class="w-full" />
+        <input 
+          v-model.number="state.step1.liveWeight"
+          type="number" 
+          placeholder="Ex: 450" 
+          id="input-weight" 
+          class="w-full p-2 border rounded bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 transition-colors"
+        />
       </UFormField>
     </div>
 

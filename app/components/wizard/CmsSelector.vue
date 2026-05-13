@@ -23,9 +23,9 @@ const estimatedCMS = (pesoVivo: number, cms: number) => {
   return result
 }
 
-// Watcher para garantir que o totalCMS esteja sempre sincronizado
-watch(() => [props.pesoVivo, state.value.step1.cmsPercentage], () => {
-  estimatedCMS(props.pesoVivo, state.value.step1.cmsPercentage)
+// Watcher para garantir que o totalCMS esteja sempre sincronizado com o estado global
+watch(() => [state.value.step1.liveWeight, state.value.step1.cmsPercentage], () => {
+  estimatedCMS(state.value.step1.liveWeight, state.value.step1.cmsPercentage)
 }, { immediate: true })
 
 const cmsPresets = [
@@ -34,7 +34,7 @@ const cmsPresets = [
   { label: 'ALTO 2.5%', value: 2.5 }
 ]
 
-const handlePreset = (val: number) => {
+  const handlePreset = (val: number) => {
   state.value.step1.isCustomCMS = false
   state.value.step1.cmsPercentage = val
 }
@@ -70,7 +70,7 @@ const handleCustomInput = () => {
       >
         <UIcon
           name="i-heroicons-pencil-square"
-          class="mr-1"
+          class="icon-prefix"
         />
         PERSONALIZADO
       </button>
@@ -78,7 +78,7 @@ const handleCustomInput = () => {
 
     <div
       v-if="state.step1.isCustomCMS"
-      class="custom-input-wrapper mt-4"
+      class="custom-input-wrapper"
     >
       <UInput
         v-model="state.step1.cmsCustomValue"
@@ -90,22 +90,22 @@ const handleCustomInput = () => {
       />
     </div>
 
-    <div class="mt-4 p-4 bg-slate-50 dark:bg-slate-900 rounded-lg text-center border-2 border-dashed border-slate-200 dark:border-slate-800 transition-colors">
+    <div class="estimate-box">
       <template v-if="props.pesoVivo > 0 && state.step1.initialCMSEstimate > 0">
-        <div class="text-slate-800 dark:text-white">
-          <p class="text-sm text-slate-500 uppercase font-bold tracking-wider mb-1">
+        <div class="estimate-content">
+          <p class="estimate-label">
             Consumo Estimado
           </p>
-          <p class="text-3xl font-black text-primary-600">
+          <p class="estimate-value">
             {{ state.step1.initialCMSEstimate.toFixed(2) }}
-            <span class="text-lg">
+            <span class="unit">
               kg/dia
             </span>
           </p>
           <UBadge
             color="primary"
             variant="subtle"
-            class="mt-2 font-bold"
+            class="percentage-badge"
           >
             {{ ((state.step1.initialCMSEstimate / props.pesoVivo) * 100).toFixed(1) }}% do Peso Vivo
           </UBadge>
@@ -113,13 +113,13 @@ const handleCustomInput = () => {
             icon="i-lucide-info"
             color="neutral"
             variant="subtle"
-            class="mt-4"
+            class="info-alert"
             description="O consumo de matéria seca representa a quantidade de alimento que o animal ingere diariamente, desconsiderando a água."
           />
         </div>
       </template>
       <template v-else>
-        <p class="text-sm text-gray-400 italic">
+        <p class="waiting-text">
           Aguardando definição do Peso Vivo e CMS...
         </p>
       </template>
@@ -142,10 +142,14 @@ const handleCustomInput = () => {
   .segmented-control {
     display: flex;
     background-color: #f1f5f9;
-    @apply dark:bg-slate-800 transition-colors;
     padding: 0.25rem;
     border-radius: 12px;
     gap: 0.25rem;
+    transition: background-color 0.2s ease;
+
+    .dark & {
+      background-color: #1e293b;
+    }
 
     .segment-btn {
       flex: 1;
@@ -162,16 +166,81 @@ const handleCustomInput = () => {
       justify-content: center;
       cursor: pointer;
 
+      .icon-prefix {
+        margin-right: 0.25rem;
+      }
+
       &.active {
         background-color: white;
-        @apply dark:bg-slate-700 dark:text-white;
         color: #075a26;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+        .dark & {
+          background-color: #334155;
+          color: white;
+        }
       }
 
       &:hover:not(.active) {
         background-color: rgba(255, 255, 255, 0.5);
+        
+        .dark & {
+          background-color: rgba(255, 255, 255, 0.05);
+        }
       }
+    }
+  }
+
+  .custom-input-wrapper {
+    margin-top: 1rem;
+  }
+
+  .estimate-box {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 0.5rem;
+    text-align: center;
+    border: 2px dashed #e2e8f0;
+    transition: all 0.3s ease;
+
+    .dark & {
+      background-color: #0f172a;
+      border-color: #1e293b;
+    }
+
+    .estimate-label {
+      font-size: 0.875rem;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .estimate-value {
+      font-size: 1.875rem;
+      font-weight: 900;
+      color: var(--ui-primary, #10b981);
+
+      .unit {
+        font-size: 1.125rem;
+      }
+    }
+
+    .percentage-badge {
+      margin-top: 0.5rem;
+      font-weight: 700;
+    }
+
+    .info-alert {
+      margin-top: 1rem;
+    }
+
+    .waiting-text {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      font-style: italic;
     }
   }
 }

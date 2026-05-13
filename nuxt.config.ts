@@ -22,7 +22,8 @@ export default defineNuxtConfig({
   css: ['~/assets/css/app.css'],
 
   routeRules: {
-    '/': { prerender: true }
+    '/': { prerender: true },
+    '/calc/**': { ssr: false }
   },
 
   future: {

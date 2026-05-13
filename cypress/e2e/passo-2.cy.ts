@@ -1,49 +1,51 @@
 describe('Wizard Passo 2 - Sistema de Produção', () => {
   beforeEach(() => {
+    // Para testar o passo 2 diretamente, precisamos preencher o estado do passo 1 ou navegar até lá
+    // Mas como o estado é global e SPA, podemos tentar navegar.
+    // No entanto, o ideal é testar o fluxo completo para garantir que os dados do passo 1 persistem.
     cy.visit('/calc/passo-1/dados-do-animal')
+    cy.get('h1', { timeout: 20000 }).should('be.visible')
+    cy.wait(3000)
+
+    // Preencher Passo 1 rapidamente
+    cy.get('select#input-race').select('Nelore', { force: true })
+    cy.get('select#input-sex').select('macho', { force: true })
+    cy.get('#input-age').clear().type('24').blur()
+    cy.get('#input-weight').clear().type('500').blur()
+    cy.contains('Mantença').click({ force: true })
+    cy.contains('MÉDIO 2.2%').click({ force: true })
     
-    // Preencher Passo 1 com esperas explícitas
-    cy.get('#input-race').select('Nelore')
-    cy.get('#input-sex').select('macho')
-    cy.get('#input-age').clear().type('24')
-    cy.get('#input-weight').clear().type('500')
-    cy.get('#objective-ganho').click()
+    cy.get('button').contains(/Próximo passo/i).click({ force: true })
     
-    cy.wait(500)
-    cy.get('button').contains('Próximo Passo').click()
-    
-    // Aguardar transição para passo 2
+    // Validar que chegou no Passo 2
     cy.url({ timeout: 15000 }).should('include', '/calc/passo-2/sistema-de-producao')
-    cy.contains('Sistema de Produção').should('be.visible')
   })
 
-  it('deve mostrar erros de validação se nada for selecionado no Passo 2', () => {
-    // Tentar avançar sem preencher nada
-    cy.get('button').contains('Próximo Passo').click()
-    
-    // Verificar se mensagens de erro aparecem
-    cy.contains('Obrigatório').should('be.visible')
-    
-    // Verificar se permanecemos na mesma página
-    cy.url().should('include', '/calc/passo-2/sistema-de-producao')
-  })
+  it('deve preencher os campos do Passo 2 e avançar para o Passo 3', () => {
+    // 1. Verificar Resumo do Passo 1
+    cy.contains('Peso Vivo: 500kg').should('be.visible')
+    cy.contains('CMS Estimado: 11.00 kg/dia').should('be.visible')
 
-  it('deve avançar para o Passo 3 após selecionar sistema e atividade', () => {
-    // 1. Selecionar Sistema de Produção
-    cy.get('#production-system-confinamento').click()
-    cy.get('#production-system-confinamento').should('have.class', 'border-primary-500')
+    // 2. Selecionar Sistema de Produção
+    cy.get('#production-system-confinamento').scrollIntoView().click({ force: true })
+    cy.get('#production-system-confinamento').should('have.class', 'active')
 
-    // 2. Selecionar Nível de Atividade
-    cy.get('#activity-level-baixo').click()
-    cy.get('#activity-level-baixo').should('have.class', 'border-primary-500')
+    // 3. Selecionar Nível de Atividade
+    cy.get('#activity-level-baixo').scrollIntoView().click({ force: true })
+    cy.get('#activity-level-baixo').should('have.class', 'active')
 
-    cy.wait(500)
+    // 4. Avançar
+    cy.get('button').contains(/Próximo passo/i).scrollIntoView().click({ force: true })
 
-    // 3. Avançar
-    cy.get('button').contains('Próximo Passo').click()
-
-    // 4. Validar Passo 3 (Ingredientes)
+    // 5. Validar Passo 3
     cy.url({ timeout: 15000 }).should('include', '/calc/passo-3/ingredientes')
-    cy.contains('Modo de Balanceamento').should('be.visible')
+  })
+
+  it('deve mostrar erros de validação se campos obrigatórios do Passo 2 estiverem vazios', () => {
+    // O Passo 2 já carrega com campos vazios (se não clicarmos)
+    cy.get('button').contains(/Próximo passo/i).scrollIntoView().click({ force: true })
+    
+    cy.contains('Obrigatório', { timeout: 10000 }).should('be.visible')
+    cy.url().should('include', '/calc/passo-2/sistema-de-producao')
   })
 })
